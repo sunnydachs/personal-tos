@@ -39,9 +39,10 @@ export function getTraitMask(selectedTraitIds: TraitId[]) {
 }
 
 function maskToBase64Url(mask: number) {
-  const bytes = new Uint8Array(1);
-  bytes[0] = mask;
-  return Buffer.from(bytes).toString("base64url");
+  const byte = String.fromCharCode(mask);
+  // btoa is available in every browser runtime and Workers; Buffer is Node-only
+  // and crashes the client bundle (browser has no Buffer).
+  return btoa(byte).replace(/\+/g, "-").replace(/\//g, "_").replace(/=+$/, "");
 }
 
 function base64UrlToMask(value: string) {
@@ -49,13 +50,18 @@ function base64UrlToMask(value: string) {
     return null;
   }
 
-  const bytes = Buffer.from(value, "base64url");
-  if (bytes.length !== 1) {
+  try {
+    const normalized = value.replace(/-/g, "+").replace(/_/g, "/");
+    const padded = normalized + "=".repeat((4 - (normalized.length % 4)) % 4);
+    const binary = atob(padded);
+    if (binary.length !== 1) {
+      return null;
+    }
+    const mask = binary.charCodeAt(0);
+    return (mask & TRAIT_MASK) === mask ? mask : null;
+  } catch {
     return null;
   }
-
-  const mask = bytes[0];
-  return (mask & TRAIT_MASK) === mask ? mask : null;
 }
 
 export function encodeState(name: string, selectedTraitIds: TraitId[]) {
