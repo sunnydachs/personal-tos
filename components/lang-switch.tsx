@@ -19,13 +19,7 @@ export function LanguageSwitch({ lang, pathname, search = "" }: LanguageSwitchPr
 
   return (
     <nav className="language-switch" aria-label="Language">
-      {lang === "en" ? (
-        <Link href={href} onClick={() => persistLang(target)}>日本語</Link>
-      ) : (
-        <Link href={href} onClick={() => persistLang(target)}>English</Link>
-      )}
-      <span aria-hidden="true">/</span>
-      <Link href={target === "ja" ? "/ja" : "/"} onClick={() => persistLang(target)}>
+      <Link href={href} onClick={() => persistLang(target)}>
         {target === "ja" ? "日本語" : "English"}
       </Link>
     </nav>
