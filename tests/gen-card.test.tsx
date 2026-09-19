@@ -1,6 +1,8 @@
 import { describe, it } from "vitest";
 import { ImageResponse } from "next/og";
 import { writeFile, mkdir } from "node:fs/promises";
+import { resolve } from "node:path";
+import { access, constants } from "node:fs/promises";
 
 describe("generate default card PNG", () => {
   it("writes public/card/default.png", async () => {
@@ -23,8 +25,15 @@ describe("generate default card PNG", () => {
       { width: 1200, height: 630 },
     );
     const buf = Buffer.from(await ir.arrayBuffer());
-    await mkdir("/home/arari/projects/personal-tos/public/card", { recursive: true });
-    await writeFile("/home/arari/projects/personal-tos/public/card/default.png", buf);
     if (buf.length < 5000) throw new Error("card too small: " + buf.length);
+    // Asset generation is a local-only step; CI has no write access to the repo checkout.
+    const outDir = resolve(process.cwd(), "public/card");
+    try {
+      await access(resolve(process.cwd(), "public"), constants.W_OK);
+    } catch {
+      return; // read-only checkout — skip writing, the PNG is already committed
+    }
+    await mkdir(outDir, { recursive: true });
+    await writeFile(resolve(outDir, "default.png"), buf);
   });
 });
