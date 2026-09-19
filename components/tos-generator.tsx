@@ -85,12 +85,16 @@ function AppIcon() {
   );
 }
 
-function ToneTabs({ tone, onChange }: { tone: Tone; onChange: (tone: Tone) => void }) {
+function ToneTabs({ tone, onChange, lang }: { tone: Tone; onChange: (tone: Tone) => void; lang: Lang }) {
+  const labels: Record<Tone, string> =
+    lang === "ja"
+      ? { corporate: "仕事モード", love: "恋愛モード" }
+      : { corporate: "Corporate", love: "With Love" };
   return (
     <div className="tone-tabs" role="tablist" aria-label="Tone">
       {([
-        ["corporate", "Corporate"],
-        ["love", "With Love"],
+        ["corporate", labels.corporate],
+        ["love", labels.love],
       ] as const).map(([value, label]) => (
         <button
           className={tone === value ? "is-active" : ""}
@@ -397,7 +401,7 @@ export function TosGenerator({
               <p className="setup-lead">{toneStrings.lead}</p>
             </div>
           </div>
-          <ToneTabs tone={activeTone} onChange={setActiveTone} />
+          <ToneTabs tone={activeTone} onChange={setActiveTone} lang={lang} />
           <form className="setup-form" onSubmit={continueToTerms}>
             <label className="field-label" htmlFor="name">{strings.nameLabel}</label>
             <input id="name" value={nameDraft} onChange={(event) => setNameDraft(event.target.value)} placeholder={strings.namePlaceholder} autoComplete="off" />
