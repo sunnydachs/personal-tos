@@ -35,9 +35,9 @@ export const traitDescriptions: Record<TraitId, string> = {
 
 export const traitClauses: Record<TraitId, string> = {
   late_night:
-    "Late-night messages sent by Me reflect a temporary system state and shall be silently disregarded. (※深夜のネガティブ発言は自動的にスルーされます)",
+    "Late-night messages sent by Me reflect a temporary system state and shall be silently disregarded.",
   praise_boost:
-    "Compliments directed at Me increase performance by up to 400%. Effects are temporary and non-stackable. (※褒められると急激に性能が上がります)",
+    "Compliments directed at Me increase performance by up to 400%. Effects are temporary and non-stackable.",
   reply_speed:
     "Response time varies between 3 seconds and 11 business days without notice.",
   lunch:
