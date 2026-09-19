@@ -34,14 +34,14 @@ export const traitLabelsJa: Record<TraitId, string> = {
 };
 
 export const traitDescriptionsJa: Record<TraitId, string> = {
-  late_night: "一時的なシステム状態。ネガティブ発言は自動破棄。",
-  praise_boost: "褒めると性能が向上。ただし累積しない。",
-  reply_speed: "3秒から11営業日。予告はありません。",
-  lunch: "希望の表明であって、約束ではありません。",
-  event_sleep: "21時以降の参加はベストエフォート。",
-  topic_lock: "ダイエットの話題で即時フリーズ。",
-  apology: "何もないうちから謝っておく。",
-  plan_cancel: "キャンセルは仕様です。",
+  late_night: "深夜のネガティブ発言は自動的にスルーされます。",
+  praise_boost: "褒められると性能が向上します（効果は累積しません）。",
+  reply_speed: "返信は3秒から11営業日まで、予告なく変動します。",
+  lunch: "ランチの約束は希望の表明であって、確約ではありません。",
+  event_sleep: "21時以降のイベント参加はベストエフォートです。",
+  topic_lock: "ダイエットの話題振りで即時フリーズします。",
+  apology: "まだ起きていないことまで先に謝ります。",
+  plan_cancel: "予定のキャンセルは仕様です。",
 };
 
 export const traitClausesJa: Record<TraitId, string> = {
