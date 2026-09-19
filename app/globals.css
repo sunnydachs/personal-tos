@@ -165,6 +165,32 @@ button:disabled {
   box-shadow: 0 0 0 3px rgb(217 255 92 / 14%);
 }
 
+.tone-tabs {
+  display: flex;
+  width: min(100%, 1040px);
+  margin: 18px auto 0;
+  padding: 4px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: var(--surface);
+}
+
+.tone-tabs button {
+  flex: 1;
+  padding: 9px 12px;
+  border: 0;
+  border-radius: 999px;
+  color: var(--muted);
+  background: transparent;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.tone-tabs button.is-active {
+  color: var(--accent-ink);
+  background: var(--accent);
+}
+
 .trait-heading {
   display: flex;
   align-items: flex-end;
@@ -444,6 +470,10 @@ button:disabled {
   border: 1px solid var(--line);
   border-radius: 24px;
   background: #111111;
+}
+
+.tone-tabs + .setup-form {
+  margin-top: 18px;
 }
 
 .result-card-inner {
