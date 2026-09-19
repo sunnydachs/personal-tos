@@ -285,13 +285,13 @@ function ResultCard({
         </div>
       </div>
       <div className="result-actions gacha-actions">
-        <button className="primary-button" type="button" onClick={downloadPng} disabled={isExporting}>Download PNG</button>
-        <button className="secondary-button" type="button" onClick={copyImage}>Copy image</button>
-        <button className="secondary-button" type="button" onClick={copyLink}>Copy link</button>
+        <button className="primary-button" type="button" onClick={downloadPng} disabled={isExporting}>{strings.downloadPng}</button>
+        <button className="secondary-button" type="button" onClick={copyImage}>{strings.copyImage}</button>
+        <button className="secondary-button" type="button" onClick={copyLink}>{strings.copyLink}</button>
       </div>
       <div className="result-actions">
-        <button className="text-button" type="button" onClick={onEdit}>Edit terms</button>
-        <button className="text-button" type="button" onClick={randomize}>See a random person's terms</button>
+        <button className="text-button" type="button" onClick={onEdit}>{strings.editTerms}</button>
+        <button className="text-button" type="button" onClick={randomize}>{strings.randomTerms}</button>
       </div>
       <p className={`action-notice ${notice ? "is-visible" : ""}`} role="status">{notice || " "}</p>
     </section>
