@@ -5,7 +5,7 @@ import { defineConfig } from "vitest/config";
 // Cloudflare plugin forbids running under the vitest node environment.
 export default defineConfig({
   test: {
-    include: ["tests/**/*.test.ts"],
+    include: ["tests/**/*.test.ts", "tests/**/*.test.tsx"],
     environment: "node",
   },
   resolve: {

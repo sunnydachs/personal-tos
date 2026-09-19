@@ -1,21 +1,21 @@
 import type { Metadata } from "next";
 import StatusTool from "@/components/status-tool";
 import { LanguageSwitch } from "@/components/lang-switch";
-import { enStrings } from "@/lib/i18n-strings";
+import { jaStrings } from "@/lib/i18n-strings";
 
 export const metadata: Metadata = {
-  title: "Modern Human Status Screen",
-  description: "Render a deterministic modern human status screen and share it as a PNG.",
+  title: "現代人ステータス画面",
+  description: "決定論的な現代人のステータス画面をPNGで共有します。",
   openGraph: {
-    locale: "en_US",
-    title: "Modern Human Status Screen",
-    description: "A deterministic modern human status screen.",
+    locale: "ja_JP",
+    title: "現代人ステータス画面",
+    description: "決定論的な現代人のステータス画面。",
     images: [{ url: "/status/opengraph-image.png", width: 1200, height: 630 }],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Modern Human Status Screen",
-    description: "A deterministic modern human status screen.",
+    title: "現代人ステータス画面",
+    description: "決定論的な現代人のステータス画面。",
     images: ["/status/opengraph-image.png"],
   },
   alternates: {
@@ -27,11 +27,11 @@ export const metadata: Metadata = {
   },
 };
 
-export default function StatusPage() {
+export default function JapaneseStatusPage() {
   return (
     <>
-      <LanguageSwitch lang="en" pathname="/status" />
-      <StatusTool lang="en" strings={enStrings.status} />
+      <LanguageSwitch lang="ja" pathname="/ja/status" />
+      <StatusTool lang="ja" strings={jaStrings.status} />
     </>
   );
 }

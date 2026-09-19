@@ -1,21 +1,21 @@
 import type { Metadata } from "next";
 import { TosGenerator } from "@/components/tos-generator";
 import { LanguageSwitch } from "@/components/lang-switch";
-import { enStrings } from "@/lib/i18n-strings";
+import { jaStrings } from "@/lib/i18n-strings";
 
 export const metadata: Metadata = {
-  title: "Terms & Conditions of Being Me (Personal ToS Generator)",
-  description: "Generate a shareable, suspiciously official set of terms for being you.",
+  title: "私の利用規約（Personal ToS Generator）",
+  description: "共有できる、少し怪しい公式風のあなた専用利用規約を作成します。",
   openGraph: {
-    locale: "en_US",
-    title: "Terms & Conditions of Being Me",
-    description: "A personal terms generator for the person who skips the fine print.",
+    locale: "ja_JP",
+    title: "私の利用規約",
+    description: "あなたのための個人利用規約ジェネレーター。",
     images: [{ url: "/card/default.png", width: 1200, height: 630 }],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Terms & Conditions of Being Me",
-    description: "A personal terms generator for the person who skips the fine print.",
+    title: "私の利用規約",
+    description: "あなたのための個人利用規約ジェネレーター。",
     images: ["/card/default.png"],
   },
   alternates: {
@@ -27,11 +27,11 @@ export const metadata: Metadata = {
   },
 };
 
-export default function HomePage() {
+export default function JapaneseHomePage() {
   return (
     <>
-      <LanguageSwitch lang="en" pathname="/" />
-      <TosGenerator lang="en" strings={enStrings.tos} />
+      <LanguageSwitch lang="ja" pathname="/ja" />
+      <TosGenerator lang="ja" strings={jaStrings.tos} />
     </>
   );
 }
