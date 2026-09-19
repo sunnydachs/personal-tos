@@ -20,7 +20,7 @@ export default function Image() {
         <div style={{ marginTop: 26, color: gachaDesign.ink, fontSize: 42, fontWeight: 700 }}>Anonymous</div>
         <div style={{ marginTop: 28, display: "flex", flexDirection: "column", gap: 12 }}>
           {rows.map(({ label, value }) => (
-            <div key={`${label}-${value}`} style={{ display: "flex", alignItems: "center", gap: 12, color: gachaDesign.muted, fontSize: gachaDesign.smallSize, width: 680 }}><span style={{ width: 54 }}>{label}</span><div style={{ height: 12, background: "#2b2b2b", flex: 1 }}><div style={{ width: `${value}%`, height: "100%", background: value > 60 ? "#8fe36a" : value >= 30 ? "#f3d35c" : "#ff6b6b" }} /></div><span>{value}</span></div>
+            <div key={`${label}-${value}`} style={{ display: "flex", alignItems: "center", gap: 12, color: gachaDesign.muted, fontSize: gachaDesign.smallSize, width: 680 }}><span style={{ width: 54 }}>{label}</span><div style={{ height: 12, width: 520, display: "flex", background: "#2b2b2b" }}><div style={{ width: `${value}%`, height: "100%", display: "flex", background: value > 60 ? "#8fe36a" : value >= 30 ? "#f3d35c" : "#ff6b6b" }} /></div><span>{value}</span></div>
           ))}
         </div>
         <div style={{ marginTop: "auto", paddingTop: 20, borderTop: `1px solid ${gachaDesign.line}`, color: gachaDesign.muted, fontSize: gachaDesign.smallSize }}>Anonymous · Status of 2026-09-19</div>
