@@ -1,5 +1,7 @@
 export type Lang = "en" | "ja";
 
+export type { TosStrings } from "@/components/tos-generator";
+
 const LANGUAGE_STORAGE_KEY = "tos-lang";
 const BASE_ORIGIN = "https://personal-tos.sunnydachs.workers.dev";
 

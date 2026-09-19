@@ -31,7 +31,7 @@ export default function HomePage() {
   return (
     <>
       <LanguageSwitch lang="en" pathname="/" />
-      <TosGenerator lang="en" strings={enStrings.tos} />
+      <TosGenerator lang="en" strings={enStrings.tos} stringsLove={enStrings.tosLove} />
     </>
   );
 }

@@ -1,9 +1,14 @@
 import { design } from "./tos-design";
-import { assembleResultCard, type TraitId } from "./tos-content";
+import {
+  assembleResultCard,
+  assembleResultCardLove,
+  type TraitId,
+} from "./tos-content";
 
 type CanvasRenderOptions = {
   name: string;
   traitIds: TraitId[];
+  tone?: "corporate" | "love";
 };
 
 function wrapText(
@@ -60,7 +65,11 @@ export async function renderTosCanvas(options: CanvasRenderOptions) {
     throw new Error("Canvas API is unavailable.");
   }
 
-  const card = assembleResultCard(options.name, options.traitIds);
+  const tone = options.tone ?? "corporate";
+  const card = tone === "love"
+    ? assembleResultCardLove(options.name, options.traitIds)
+    : assembleResultCard(options.name, options.traitIds);
+  const accent = tone === "love" ? "#f5a9c0" : design.accent;
   context.fillStyle = design.background;
   context.fillRect(0, 0, canvas.width, canvas.height);
 
@@ -74,9 +83,15 @@ export async function renderTosCanvas(options: CanvasRenderOptions) {
   context.fill();
 
   let y = cardY + 72;
-  context.fillStyle = design.accent;
+  context.fillStyle = accent;
   context.font = `600 ${design.eyebrowSize}px ${design.fontFamily}`;
-  context.fillText("TERMS & CONDITIONS OF BEING ME", cardX + 54, y);
+  context.fillText(
+    tone === "love"
+      ? "INSTRUCTION MANUAL OF BEING ME"
+      : "TERMS & CONDITIONS OF BEING ME",
+    cardX + 54,
+    y,
+  );
 
   y += 50;
   context.fillStyle = design.ink;
@@ -113,12 +128,18 @@ export async function renderTosCanvas(options: CanvasRenderOptions) {
   y += 44;
   context.fillStyle = design.ink;
   context.font = `600 ${design.clauseSize}px ${design.fontFamily}`;
-  context.fillText("Article 3 · Handling Precautions", cardX + 54, y);
+  context.fillText(
+    tone === "love"
+      ? "Article 3 · What I need from you"
+      : "Article 3 · Handling Precautions",
+    cardX + 54,
+    y,
+  );
   y += design.clauseSize * design.lineHeight + 16;
 
   context.font = `${design.clauseSize - 1}px ${design.fontFamily}`;
   card.clauses.forEach((clause, index) => {
-    context.fillStyle = design.accent;
+  context.fillStyle = accent;
     context.fillText(`${index + 1}.`, cardX + 54, y);
     y += drawWrappedText(
       context,
@@ -134,7 +155,11 @@ export async function renderTosCanvas(options: CanvasRenderOptions) {
   y += 10;
   context.fillStyle = design.ink;
   context.font = `600 ${design.clauseSize}px ${design.fontFamily}`;
-  context.fillText("Article 6 · Changes to These Terms", cardX + 54, y);
+  context.fillText(
+    tone === "love" ? "Article 6 · Fine print" : "Article 6 · Changes to These Terms",
+    cardX + 54,
+    y,
+  );
   y += design.clauseSize * design.lineHeight + 16;
   context.font = `${design.clauseSize - 1}px ${design.fontFamily}`;
   y += drawWrappedText(
@@ -149,7 +174,13 @@ export async function renderTosCanvas(options: CanvasRenderOptions) {
   const footerY = cardY + cardHeight - 48;
   context.fillStyle = design.muted;
   context.font = `${design.footerSize}px ${design.fontFamily}`;
-  context.fillText(`You agreed to this. - ${card.name}`, cardX + 54, footerY);
+  context.fillText(
+    tone === "love"
+      ? `You promised. - ${card.name}`
+      : `You agreed to this. - ${card.name}`,
+    cardX + 54,
+    footerY,
+  );
 
   return canvas;
 }
