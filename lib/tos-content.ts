@@ -33,6 +33,50 @@ export const traitLabelsJa: Record<TraitId, string> = {
   plan_cancel: "予定は優雅にキャンセル",
 };
 
+export const traitLabelsLove: Record<TraitId, string> = {
+  late_night: "Trip requests",
+  praise_boost: "Praise refills",
+  reply_speed: "Listen, don't fix",
+  lunch: "Fancy dinners",
+  event_sleep: "Slow days, no sighs",
+  topic_lock: "Invite me anyway",
+  apology: "React to my links",
+  plan_cancel: "Stay a little longer",
+};
+
+export const traitLabelsLoveJa: Record<TraitId, string> = {
+  late_night: "旅行に連れてって",
+  praise_boost: "褒めると性能回復",
+  reply_speed: "聞いてほしい",
+  lunch: "ディナーに連れてって",
+  event_sleep: "ため息なしで待って",
+  topic_lock: "断っても誘って",
+  apology: "これ見てに反応して",
+  plan_cancel: "帰り際にもう少し",
+};
+
+export const traitDescriptionsLove: Record<TraitId, string> = {
+  late_night: "Occasional trips, even one town over. Anniversaries count double.",
+  praise_boost: "Compliments restore my performance. Renew them regularly.",
+  reply_speed: "When I ramble, just listen. You don't have to fix anything.",
+  lunch: "A stylish dinner sometimes. Don't say it's too fancy.",
+  event_sleep: "I'm slow on important days. Wait for me without sighing.",
+  topic_lock: "Being asked matters more than going.",
+  apology: "My 'look at this' messages are never just nothing.",
+  plan_cancel: "Goodbyes are my weakness. A few more minutes, please.",
+};
+
+export const traitDescriptionsLoveJa: Record<TraitId, string> = {
+  late_night: "たまに旅行に連れて行ってほしい。近所でもいい。記念日は2倍カウント。",
+  praise_boost: "褒めると性能が回復する。定期的に更新してほしい。",
+  reply_speed: "私がぐだぐだ話すときは、聞いてほしい。何も直さなくていい。",
+  lunch: "ときどきオシャレなディナーに連れて行ってほしい。高いって言わないで。",
+  event_sleep: "大事な日は足が遅い。ため息をつかずに待ってほしい。",
+  topic_lock: "行くかどうかより、聞かれることが大事。",
+  apology: "私の 'これ見て' メッセージには反応してほしい。",
+  plan_cancel: "さよならは私の弱点。もう少しだけいてほしい。",
+};
+
 export const traitDescriptionsJa: Record<TraitId, string> = {
   late_night: "深夜のネガティブ発言は自動的にスルーされます。",
   praise_boost: "褒められると性能が向上します（効果は累積しません）。",

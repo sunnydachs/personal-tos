@@ -134,7 +134,7 @@ const enTosLove: TosStrings = {
   lead:
     "A warm, slightly clingy guide for the people who take care of me. Handle with love.",
   traitTitle: "Choose what I need from you",
-  continueLabel: "Read my manual →",
+  continueLabel: "Read my manual",
   termsEyebrow: "PERSONAL TERMS / WITH LOVE",
   termsTitle: "Instruction Manual of Being Me",
   finePrint:
@@ -196,7 +196,7 @@ const jaTosLove: TosStrings = {
   lead:
     "私の世話をしてくれるあなたへ。少し甘えん坊の、あったかいお願い。愛を持って扱ってね。",
   traitTitle: "私にしてほしいことを選ぶ",
-  continueLabel: "マニュアルを読む →",
+  continueLabel: "マニュアルを読む",
   termsEyebrow: "PERSONAL TERMS / 恋愛モード",
   termsTitle: "私の取扱説明書（恋愛編）",
   finePrint:

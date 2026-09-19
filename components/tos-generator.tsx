@@ -12,9 +12,13 @@ import {
   assembleResultCardLoveJa,
   traitDescriptions,
   traitDescriptionsJa,
+  traitDescriptionsLove,
+  traitDescriptionsLoveJa,
   traitIds,
   traitLabels,
   traitLabelsJa,
+  traitLabelsLove,
+  traitLabelsLoveJa,
   type TraitId,
 } from "@/lib/tos-content";
 import {
@@ -116,14 +120,20 @@ function TraitPicker({
   onToggle,
   strings,
   lang,
+  tone,
 }: {
   selectedTraitIds: TraitId[];
   onToggle: (traitId: TraitId) => void;
   strings: Pick<TosStrings, "selectedCount">;
   lang: Lang;
+  tone: Tone;
 }) {
-  const labels = lang === "ja" ? traitLabelsJa : traitLabels;
-  const descriptions = lang === "ja" ? traitDescriptionsJa : traitDescriptions;
+  const labels = tone === "love"
+    ? (lang === "ja" ? traitLabelsLoveJa : traitLabelsLove)
+    : (lang === "ja" ? traitLabelsJa : traitLabels);
+  const descriptions = tone === "love"
+    ? (lang === "ja" ? traitDescriptionsLoveJa : traitDescriptionsLove)
+    : (lang === "ja" ? traitDescriptionsJa : traitDescriptions);
   return (
     <div className="trait-picker">
       {traitIds.map((traitId) => {
@@ -390,7 +400,7 @@ export function TosGenerator({
   function editTerms() { setScreen("setup"); }
 
   return (
-    <main className="app-page">
+    <main className={`app-page ${activeTone === "love" ? "tone-love" : ""}`}>
       {screen === "setup" && (
         <section className="app-shell setup-shell" aria-labelledby="setup-title">
           <ToneTabs tone={activeTone} onChange={setActiveTone} lang={lang} />
@@ -403,15 +413,15 @@ export function TosGenerator({
             </div>
           </div>
           <form className="setup-form" onSubmit={continueToTerms}>
-            <label className="field-label" htmlFor="name">{strings.nameLabel}</label>
-            <input id="name" value={nameDraft} onChange={(event) => setNameDraft(event.target.value)} placeholder={strings.namePlaceholder} autoComplete="off" />
+            <label className="field-label" htmlFor="name">{toneStrings.nameLabel}</label>
+            <input id="name" value={nameDraft} onChange={(event) => setNameDraft(event.target.value)} placeholder={toneStrings.namePlaceholder} autoComplete="off" />
             <div className="trait-heading">
-              <div><span className="section-index">01</span><h2>{strings.traitTitle}</h2></div>
-              <p>{formatTemplate(strings.selectedCount, { count: selectedTraitIds.length })}</p>
+              <div><span className="section-index">01</span><h2>{toneStrings.traitTitle}</h2></div>
+              <p>{formatTemplate(toneStrings.selectedCount, { count: selectedTraitIds.length })}</p>
             </div>
-            <TraitPicker selectedTraitIds={selectedTraitIds} onToggle={toggleTrait} strings={strings} lang={lang} />
-            <p className="setup-note">{strings.setupNote}</p>
-            <button className="primary-button continue-button" type="submit">{strings.continueLabel} <span aria-hidden="true">→</span></button>
+            <TraitPicker selectedTraitIds={selectedTraitIds} onToggle={toggleTrait} strings={toneStrings} lang={lang} tone={activeTone} />
+            <p className="setup-note">{toneStrings.setupNote}</p>
+            <button className="primary-button continue-button" type="submit">{toneStrings.continueLabel} <span aria-hidden="true">→</span></button>
           </form>
         </section>
       )}
