@@ -1,12 +1,15 @@
 "use client";
 
-import dynamic from "next/dynamic";
 import { FormEvent, useEffect, useMemo, useState } from "react";
 import {
   assembleClauses,
   assembleClausesJa,
+  assembleClausesLove,
+  assembleClausesLoveJa,
   assembleResultCard,
   assembleResultCardJa,
+  assembleResultCardLove,
+  assembleResultCardLoveJa,
   traitDescriptions,
   traitDescriptionsJa,
   traitIds,
@@ -22,12 +25,10 @@ import {
   type GeneratorState,
 } from "@/lib/tos-state";
 import { formatTemplate } from "@/lib/i18n";
-import type { Lang } from "@/lib/i18n";
-
-const TosCanvas = dynamic(() => import("@/lib/tos-render-canvas"), { ssr: false });
+import type { Lang } from "@/lib/i18n-strings";
 
 type Screen = "setup" | "terms" | "result";
-
+export type Tone = "corporate" | "love";
 type TosStrings = {
   eyebrow: string;
   setupEyebrow: string;
@@ -84,6 +85,28 @@ function AppIcon() {
   );
 }
 
+function ToneTabs({ tone, onChange }: { tone: Tone; onChange: (tone: Tone) => void }) {
+  return (
+    <div className="tone-tabs" role="tablist" aria-label="Tone">
+      {([
+        ["corporate", "Corporate"],
+        ["love", "With Love"],
+      ] as const).map(([value, label]) => (
+        <button
+          className={tone === value ? "is-active" : ""}
+          key={value}
+          type="button"
+          role="tab"
+          aria-selected={tone === value}
+          onClick={() => onChange(value)}
+        >
+          {label}
+        </button>
+      ))}
+    </div>
+  );
+}
+
 function TraitPicker({
   selectedTraitIds,
   onToggle,
@@ -119,19 +142,25 @@ function TraitPicker({
 function TermsModal({
   lang,
   state,
+  tone,
   onAgree,
   strings,
 }: {
   lang: Lang;
   state: GeneratorState;
+  tone: Tone;
   onAgree: () => void;
   strings: TosStrings;
 }) {
   const clauses = useMemo(
-    () => lang === "ja"
-      ? assembleClausesJa(state.name, state.traitIds)
-      : assembleClauses(state.name, state.traitIds),
-    [lang, state.name, state.traitIds],
+    () => tone === "love"
+      ? lang === "ja"
+        ? assembleClausesLoveJa(state.name, state.traitIds)
+        : assembleClausesLove(state.name, state.traitIds)
+      : lang === "ja"
+        ? assembleClausesJa(state.name, state.traitIds)
+        : assembleClauses(state.name, state.traitIds),
+    [lang, state.name, state.traitIds, tone],
   );
   const [readPercent, setReadPercent] = useState(0);
 
@@ -195,30 +224,36 @@ function TermsModal({
 function ResultCard({
   lang,
   state,
+  tone,
   onEdit,
   strings,
 }: {
   lang: Lang;
   state: GeneratorState;
+  tone: Tone;
   onEdit: () => void;
   strings: TosStrings;
 }) {
   const card = useMemo(
-    () => lang === "ja"
-      ? assembleResultCardJa(state.name, state.traitIds)
-      : assembleResultCard(state.name, state.traitIds),
-    [lang, state.name, state.traitIds],
+    () => tone === "love"
+      ? lang === "ja"
+        ? assembleResultCardLoveJa(state.name, state.traitIds)
+        : assembleResultCardLove(state.name, state.traitIds)
+      : lang === "ja"
+        ? assembleResultCardJa(state.name, state.traitIds)
+        : assembleResultCard(state.name, state.traitIds),
+    [lang, state.name, state.traitIds, tone],
   );
   const [notice, setNotice] = useState("");
   const [isExporting, setIsExporting] = useState(false);
-  const shareUrl = `/${lang === "ja" ? "ja?" : ""}${encodeState(state.name, state.traitIds)}`;
+  const shareUrl = `/${lang === "ja" ? "ja?" : ""}${encodeState(state.name, state.traitIds, tone)}`;
 
   async function downloadPng() {
     setIsExporting(true);
     setNotice("");
     try {
       const { renderTosCanvas } = await import("@/lib/tos-render-canvas");
-      const canvas = await renderTosCanvas({ name: state.name, traitIds: state.traitIds });
+      const canvas = await renderTosCanvas({ name: state.name, traitIds: state.traitIds, tone });
       const blob = await new Promise<Blob | null>((resolve) => canvas.toBlob(resolve, "image/png"));
       if (!blob) throw new Error("Could not create PNG.");
       const url = URL.createObjectURL(blob);
@@ -239,7 +274,7 @@ function ResultCard({
     setNotice("");
     try {
       const { renderTosCanvas } = await import("@/lib/tos-render-canvas");
-      const canvas = await renderTosCanvas({ name: state.name, traitIds: state.traitIds });
+      const canvas = await renderTosCanvas({ name: state.name, traitIds: state.traitIds, tone });
       const blob = await new Promise<Blob | null>((resolve) => canvas.toBlob(resolve, "image/png"));
       if (!blob) throw new Error("Could not create PNG.");
       await navigator.clipboard.write([new ClipboardItem({ "image/png": blob })]);
@@ -262,7 +297,7 @@ function ResultCard({
   function randomize() {
     const shuffled = [...traitIds].sort(() => Math.random() - 0.5);
     const count = 2 + Math.floor(Math.random() * 3);
-    window.location.assign(`/${lang === "ja" ? "ja?" : ""}${encodeState(state.name, shuffled.slice(0, count))}`);
+    window.location.assign(`/${lang === "ja" ? "ja?" : ""}${encodeState(state.name, shuffled.slice(0, count), tone)}`);
   }
 
   return (
@@ -298,8 +333,26 @@ function ResultCard({
   );
 }
 
-export function TosGenerator({ lang, strings }: { lang: Lang; strings: TosStrings }) {
+export function TosGenerator({
+  lang,
+  strings,
+  stringsLove,
+  tone = "corporate",
+}: {
+  lang: Lang;
+  strings: TosStrings;
+  stringsLove: TosStrings;
+  tone?: Tone;
+}) {
   const [state, setState] = useState<GeneratorState>(() => getInitialState());
+  const [activeTone, setActiveTone] = useState<Tone>(() =>
+    typeof window === "undefined"
+      ? tone
+      : new URLSearchParams(window.location.search).get("m") === "love"
+        ? "love"
+        : "corporate",
+  );
+  const toneStrings = activeTone === "love" ? stringsLove : strings;
   const [screen, setScreen] = useState<Screen>("setup");
   const [nameDraft, setNameDraft] = useState(state.name === "Anonymous" ? "" : state.name);
   const [selectedTraitIds, setSelectedTraitIds] = useState<TraitId[]>(state.traitIds);
@@ -307,6 +360,11 @@ export function TosGenerator({ lang, strings }: { lang: Lang; strings: TosString
   useEffect(() => {
     const nextState = getInitialState();
     setState(nextState);
+    setActiveTone(
+      new URLSearchParams(window.location.search).get("m") === "love"
+        ? "love"
+        : "corporate",
+    );
     setNameDraft(nextState.name === "Anonymous" ? "" : nextState.name);
     setSelectedTraitIds(nextState.traitIds);
     if (nextState.traitIds.length > 0) setScreen("terms");
@@ -319,9 +377,9 @@ export function TosGenerator({ lang, strings }: { lang: Lang; strings: TosString
   }
   function continueToTerms(event: FormEvent) {
     event.preventDefault();
-    const nextState = { name: nameDraft.trim() || "Anonymous", traitIds: selectedTraitIds };
+    const nextState = { name: nameDraft.trim() || "Anonymous", traitIds: selectedTraitIds, tone: activeTone };
     setState(nextState);
-    window.history.replaceState(null, "", `/${lang === "ja" ? "ja?" : ""}${encodeState(nextState.name, nextState.traitIds)}`);
+    window.history.replaceState(null, "", `/${lang === "ja" ? "ja?" : ""}${encodeState(nextState.name, nextState.traitIds, activeTone)}`);
     setScreen("terms");
   }
   function agreeToTerms() { setScreen("result"); }
@@ -334,11 +392,12 @@ export function TosGenerator({ lang, strings }: { lang: Lang; strings: TosString
           <div className="setup-intro">
             <AppIcon />
             <div>
-              <p className="eyebrow">{strings.setupEyebrow}</p>
-              <h1 id="setup-title">{strings.title}<br /><em>{strings.titleEm}</em></h1>
-              <p className="setup-lead">{strings.lead}</p>
+              <p className="eyebrow">{toneStrings.setupEyebrow}</p>
+              <h1 id="setup-title">{toneStrings.title}<br /><em>{toneStrings.titleEm}</em></h1>
+              <p className="setup-lead">{toneStrings.lead}</p>
             </div>
           </div>
+          <ToneTabs tone={activeTone} onChange={setActiveTone} />
           <form className="setup-form" onSubmit={continueToTerms}>
             <label className="field-label" htmlFor="name">{strings.nameLabel}</label>
             <input id="name" value={nameDraft} onChange={(event) => setNameDraft(event.target.value)} placeholder={strings.namePlaceholder} autoComplete="off" />
@@ -352,8 +411,8 @@ export function TosGenerator({ lang, strings }: { lang: Lang; strings: TosString
           </form>
         </section>
       )}
-      {screen === "terms" && <TermsModal lang={lang} state={state} onAgree={agreeToTerms} strings={strings} />}
-      {screen === "result" && <ResultCard lang={lang} state={state} onEdit={editTerms} strings={strings} />}
+      {screen === "terms" && <TermsModal lang={lang} state={state} tone={activeTone} onAgree={agreeToTerms} strings={toneStrings} />}
+      {screen === "result" && <ResultCard lang={lang} state={state} tone={activeTone} onEdit={editTerms} strings={toneStrings} />}
     </main>
   );
 }

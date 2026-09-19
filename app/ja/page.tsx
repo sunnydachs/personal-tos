@@ -31,7 +31,7 @@ export default function JapaneseHomePage() {
   return (
     <>
       <LanguageSwitch lang="ja" pathname="/ja" />
-      <TosGenerator lang="ja" strings={jaStrings.tos} />
+      <TosGenerator lang="ja" strings={jaStrings.tos} stringsLove={jaStrings.tosLove} />
     </>
   );
 }

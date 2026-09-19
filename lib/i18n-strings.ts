@@ -1,49 +1,20 @@
 import type { TosStrings } from "@/components/tos-generator";
+import type { Lang } from "@/lib/i18n";
 
-export type ResolutionStateId = "4K" | "FullHD" | "720p" | "144p" | "PixelArt";
-export type SubstituteCharacterId =
-  | "chihuahua"
-  | "tanuki"
-  | "intern"
-  | "ghost"
-  | "senior"
-  | "meeting";
-
-type GachaStrings = {
-  eyebrow: string;
-  title: string;
-  pitch: string;
-  nameLabel: string;
-  namePlaceholder: string;
-  seedLabel: string;
-  seedPlaceholder: string;
-  action: string;
-  downloadPng: string;
-  copyLink: string;
-  pngDownloaded: string;
-  linkCopied: string;
-  clipboardBlocked: string;
-  resetNote: string;
-  empty: string;
-  cardEyebrow: string;
-  cardDate: string;
-  shareLine: string;
-};
-
-type ResolutionStrings = GachaStrings & {
+export type ResolutionStrings = GachaStrings & {
   states: Record<ResolutionStateId, string>;
   stateDescription: Record<ResolutionStateId, string>;
   share: string;
 };
 
-type SubstituteStrings = GachaStrings & {
+export type SubstituteStrings = GachaStrings & {
   characters: Record<SubstituteCharacterId, string>;
   characterDescriptions: Record<SubstituteCharacterId, string>;
   defenseLabel: string;
   share: string;
 };
 
-type StatusStrings = {
+export type StatusStrings = {
   eyebrow: string;
   title: string;
   pitch: string;
@@ -66,15 +37,49 @@ type StatusStrings = {
   share: string;
 };
 
+export type ResolutionStateId = "4K" | "FullHD" | "720p" | "144p" | "PixelArt";
+export type SubstituteCharacterId =
+  | "chihuahua"
+  | "tanuki"
+  | "intern"
+  | "ghost"
+  | "senior"
+  | "meeting";
+
+export type { Lang } from "@/lib/i18n";
+
+type GachaStrings = {
+  eyebrow: string;
+  title: string;
+  pitch: string;
+  nameLabel: string;
+  namePlaceholder: string;
+  seedLabel: string;
+  seedPlaceholder: string;
+  action: string;
+  downloadPng: string;
+  copyLink: string;
+  pngDownloaded: string;
+  linkCopied: string;
+  clipboardBlocked: string;
+  resetNote: string;
+  empty: string;
+  cardEyebrow: string;
+  cardDate: string;
+  share?: string;
+};
+
 export type AppStrings = {
   en: {
     tos: TosStrings;
+    tosLove: TosStrings;
     resolution: ResolutionStrings;
     substitute: SubstituteStrings;
     status: StatusStrings;
   };
   ja: {
     tos: TosStrings;
+    tosLove: TosStrings;
     resolution: ResolutionStrings;
     substitute: SubstituteStrings;
     status: StatusStrings;
@@ -122,6 +127,26 @@ const enTos: TosStrings = {
   footer: "Personal ToS · Your personal handling guide",
 };
 
+const enTosLove: TosStrings = {
+  ...enTos,
+  setupEyebrow: "PERSONAL TERMS / WITH LOVE",
+  title: "Instruction Manual",
+  lead:
+    "A warm, slightly clingy guide for the people who take care of me. Handle with love.",
+  traitTitle: "Choose what I need from you",
+  continueLabel: "Read my manual →",
+  termsEyebrow: "PERSONAL TERMS / WITH LOVE",
+  termsTitle: "Instruction Manual of Being Me",
+  finePrint:
+    "By promising, you accept all requests, including the ones you skipped.",
+  agreeLabel: "I promise →",
+  resultEyebrow: "PERSONAL TERMS / WITH LOVE",
+  resultKicker:
+    "You promised to take care of me. Even though I'm like this.",
+  resultClue: "Article 5: I come with a lifetime guarantee.",
+  resultFooter: "You promised. - {name}",
+};
+
 const jaTos: TosStrings = {
   eyebrow: "PERSONAL TERMS / 法的Notice",
   setupEyebrow: "PERSONAL TERMS / 法的Notice",
@@ -161,6 +186,27 @@ const jaTos: TosStrings = {
   exportFailed: "保存に失敗しました。もう一度お試しください。",
   clipboardBlocked: "クリップボードへのアクセスが拒否されました。",
   footer: "Personal ToS · あなたの取り扱い説明書",
+};
+
+const jaTosLove: TosStrings = {
+  ...jaTos,
+  setupEyebrow: "PERSONAL TERMS / 恋愛モード",
+  title: "私の取扱説明書",
+  titleEm: "（恋愛編）",
+  lead:
+    "私の世話をしてくれるあなたへ。少し甘えん坊の、あったかいお願い。愛を持って扱ってね。",
+  traitTitle: "私にしてほしいことを選ぶ",
+  continueLabel: "マニュアルを読む →",
+  termsEyebrow: "PERSONAL TERMS / 恋愛モード",
+  termsTitle: "私の取扱説明書（恋愛編）",
+  finePrint:
+    "約束すると、読み飛ばしたお願いを含むすべてに同意したものとみなされます。",
+  agreeLabel: "約束する →",
+  resultEyebrow: "PERSONAL TERMS / 恋愛モード",
+  resultKicker:
+    "こんな私だけど、大切にしてくれるって約束してくれた。",
+  resultClue: "第5条: 私には永久保証が付いてる。",
+  resultFooter: "約束したね。 - {name}",
 };
 
 const enResolution: ResolutionStrings = {
@@ -357,6 +403,7 @@ const jaStatus: StatusStrings = {
 
 export const enStrings = {
   tos: enTos,
+  tosLove: enTosLove,
   resolution: enResolution,
   substitute: enSubstitute,
   status: enStatus,
@@ -364,6 +411,7 @@ export const enStrings = {
 
 export const jaStrings = {
   tos: jaTos,
+  tosLove: jaTosLove,
   resolution: jaResolution,
   substitute: jaSubstitute,
   status: jaStatus,

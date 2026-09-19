@@ -25,9 +25,13 @@ function hashString(value: string) {
   return hash >>> 0;
 }
 
-export function getVersion(name: string, traitIdsToHash: TraitId[]) {
+export function getVersion(
+  name: string,
+  traitIdsToHash: TraitId[],
+  tone: "corporate" | "love" = "corporate",
+) {
   const mask = getTraitMask(traitIdsToHash);
-  const hash = hashString(`${normalizeName(name)}|${mask}`);
+  const hash = hashString(`${normalizeName(name)}|${mask}|${tone}`);
   return `v${hash.toString(16).slice(0, 5)}`;
 }
 
@@ -64,28 +68,38 @@ function base64UrlToMask(value: string) {
   }
 }
 
-export function encodeState(name: string, selectedTraitIds: TraitId[]) {
+export function encodeState(
+  name: string,
+  selectedTraitIds: TraitId[],
+  tone: "corporate" | "love" = "corporate",
+) {
   const normalizedTraitIds = selectedTraitIds.filter((traitId) =>
     traitIds.includes(traitId),
   );
   const params = new URLSearchParams();
   params.set("n", normalizeName(name));
   params.set("t", maskToBase64Url(getTraitMask(normalizedTraitIds)));
-  params.set("v", getVersion(normalizeName(name), normalizedTraitIds));
+  params.set("v", getVersion(normalizeName(name), normalizedTraitIds, tone));
+  if (tone === "love") params.set("m", tone);
   return params.toString();
 }
 
-export function parseState(search: string): GeneratorState | null {
+export function parseState(
+  search: string,
+  options: { tone?: "corporate" | "love" } = {},
+): GeneratorState | null {
   try {
     const params = new URLSearchParams(search);
     const nameValue = params.get("n");
     const traitValue = params.get("t");
     const versionValue = params.get("v");
+    const modeValue = params.get("m");
 
     if (traitValue === null || !/^[A-Za-z0-9_-]+$/.test(traitValue)) {
       return null;
     }
 
+    const tone = modeValue === "love" ? "love" : options.tone ?? "corporate";
     const mask = base64UrlToMask(traitValue);
     if (mask === null) {
       return null;
@@ -93,19 +107,22 @@ export function parseState(search: string): GeneratorState | null {
 
     const selectedTraitIds = traitIds.filter((_, index) => (mask & (1 << index)) !== 0);
     const name = normalizeName(nameValue ?? "");
-    const expectedVersion = getVersion(name, selectedTraitIds);
+    const expectedVersion = getVersion(name, selectedTraitIds, tone);
 
     if (versionValue && versionValue !== expectedVersion) {
       return null;
     }
 
-    return { name, traitIds: selectedTraitIds };
+    return { name, traitIds: selectedTraitIds, tone };
   } catch {
     return null;
   }
 }
 
-export function parseCompactState(value: string): GeneratorState | null {
+export function parseCompactState(
+  value: string,
+  options: { tone?: "corporate" | "love" } = {},
+): GeneratorState | null {
   try {
     if (!/^[A-Za-z0-9_-]+$/.test(value)) {
       return null;

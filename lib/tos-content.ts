@@ -121,6 +121,70 @@ export const warrantyDisclaimer =
 export const changesClause =
   "These terms may be updated at any time without notice. Continued interaction implies acceptance of the new Me. This is not negotiable, and it is not your fault.";
 
+export type Lang = "en" | "ja";
+
+export const loveTraitClauses: Record<TraitId, string> = {
+  late_night:
+    "Take me on a trip occasionally, even if it's just one town over. Anniversaries count double.",
+  praise_boost:
+    "Compliments make my performance spike by up to 400%. Effects are temporary, so please renew them regularly.",
+  reply_speed:
+    "When I ramble, just listen. You don't have to fix anything.",
+  lunch:
+    "Have a stylish dinner with me sometimes. Don't say it's too fancy.",
+  event_sleep:
+    "I'm slow on important days. Wait for me without sighing.",
+  topic_lock:
+    "Invite me even when you're sure I'll say no. Being asked matters more than going.",
+  apology:
+    "Reply to my 'look at this' messages. They are never just nothing.",
+  plan_cancel:
+    "Stay a little longer when you're about to leave. Goodbyes are my weakness.",
+};
+
+export const loveTraitClausesJa: Record<TraitId, string> = {
+  late_night:
+    "たまに旅行に連れて行ってほしい。近所でもいい。記念日は2倍カウント。",
+  praise_boost:
+    "褒めると性能が最大400%上がる。効果は一時的だから、定期的に更新してほしい。",
+  reply_speed:
+    "私がぐだぐだ話すときは、聞いてほしい。何も直さなくていい。",
+  lunch:
+    "ときどきオシャレなディナーに連れて行ってほしい。高いって言わないで。",
+  event_sleep:
+    "大事な日は足が遅い。ため息をつかずに待ってほしい。",
+  topic_lock:
+    "断ると分かっていても誘ってほしい。行くかどうかより、聞かれることが大事。",
+  apology:
+    "私の 'これ見て' メッセージには反応してほしい。決してただの何かじゃない。",
+  plan_cancel:
+    "帰り際にもう少しいてほしい。さよならは私の弱点。",
+};
+
+export const loveFixedArticles = [
+  "This manual exists so the people who love me can take better care of me. It is a labor of love, not a legal document. (Legally distinct. Probably.)",
+  "'Me' is the person you care about, flaws and all.",
+  "'You' are someone I trust enough to hand this manual to. That's a big deal.",
+  "'Perfect' is a concept I have opted out of.",
+  "Don't say 'you're too much' when I'm excited. That's just how I work.",
+  "Don't disappear without warning. I will assume the worst.",
+  "Don't compare me to anyone else. I come with my own quirks, custom-fitted.",
+  "I come with a lifetime guarantee. Even though I'm like this, laugh with me and forgive me, and I will keep working. Please cherish me forever.",
+  "This manual may be updated whenever I grow. Continued love implies acceptance of the new me. That was never your burden to carry alone.",
+] as const;
+
+export const loveFixedArticlesJa = [
+  "このマニュアルは、私を愛してくれる人がもっと私を大切にできるように作りました。法律文書ではなく、愛の労働です。（たぶん法的には別物。）",
+  "'私' とは、あなたが大切に思っている人間のこと。欠点込み。",
+  "'あなた' とは、このマニュアルを手渡すだけの信頼ができる相手のこと。それは大きい。",
+  "'完璧' とは、私がオプトアウトした概念のこと。",
+  "私が喜んでいるときに 'やりすぎ' と言わないで。それが私の動き方だから。",
+  "予告なしに消えないで。最悪のことばかり考えるから。",
+  "誰かと比較しないで。私の癖はオーダーメイドだから。",
+  "私には永久保証が付いてる。こんな私だけど、笑って許してくれたら、ちゃんと動き続ける。ずっと大切にしてほしい。",
+  "このマニュアルは、私が成長したら更新される。愛を続けることが、新しい私への同意になる。それはあなた一人で背負う荷物じゃなかった。",
+] as const;
+
 export function assembleClauses(name: string, selectedTraitIds: TraitId[]) {
   const normalizedTraitIds = selectedTraitIds.filter((traitId) =>
     traitIds.includes(traitId),
@@ -233,4 +297,86 @@ export function assembleResultCard(name: string, selectedTraitIds: TraitId[]) {
     clauses: normalizedTraitIds.map((traitId) => traitClauses[traitId]),
     changesClause,
   };
+}
+
+export function assembleClausesLove(
+  name: string,
+  selectedTraitIds: TraitId[],
+  lang: "en" | "ja" = "en",
+) {
+  const normalizedTraitIds = selectedTraitIds.filter((traitId) =>
+    traitIds.includes(traitId),
+  );
+  const traitClausesForLang = lang === "ja"
+    ? loveTraitClausesJa
+    : loveTraitClauses;
+  const fixedArticles = lang === "ja" ? loveFixedArticlesJa : loveFixedArticles;
+
+  return [
+    {
+      number: "Article 1",
+      title: "Purpose",
+      clauses: [fixedArticles[0]],
+    },
+    {
+      number: "Article 2",
+      title: "About Me",
+      clauses: [fixedArticles[1], fixedArticles[2], fixedArticles[3]],
+    },
+    {
+      number: "Article 3",
+      title: "What I need from you",
+      clauses: normalizedTraitIds.map((traitId) => traitClausesForLang[traitId]),
+    },
+    {
+      number: "Article 4",
+      title: "Please be gentle",
+      clauses: [fixedArticles[4], fixedArticles[5], fixedArticles[6]],
+    },
+    {
+      number: "Article 5",
+      title: "Warranty",
+      clauses: [fixedArticles[7]],
+    },
+    {
+      number: "Article 6",
+      title: "Fine print",
+      clauses: [fixedArticles[8]],
+    },
+  ];
+}
+
+export function assembleClausesLoveJa(
+  name: string,
+  selectedTraitIds: TraitId[],
+) {
+  return assembleClausesLove(name, selectedTraitIds, "ja");
+}
+
+export function assembleResultCardLove(
+  name: string,
+  selectedTraitIds: TraitId[],
+  lang: "en" | "ja" = "en",
+) {
+  const normalizedTraitIds = selectedTraitIds.filter((traitId) =>
+    traitIds.includes(traitId),
+  );
+  const traitClausesForLang = lang === "ja"
+    ? loveTraitClausesJa
+    : loveTraitClauses;
+  const fixedArticles = lang === "ja" ? loveFixedArticlesJa : loveFixedArticles;
+
+  return {
+    name,
+    selectedTraitIds: normalizedTraitIds,
+    clauses: normalizedTraitIds.map((traitId) => traitClausesForLang[traitId]),
+    changesClause: fixedArticles[8],
+  };
+}
+
+export function assembleResultCardLoveJa(
+  name: string,
+  selectedTraitIds: TraitId[],
+) {
+  return assembleResultCardLove(name, selectedTraitIds, "ja");
 }
