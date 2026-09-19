@@ -11,7 +11,7 @@ export const metadata: Metadata = {
     type: "website",
     images: [
       {
-        url: "/card/default/opengraph-image.png",
+        url: "/card/default.png",
         width: 1200,
         height: 630,
         alt: "Terms and Conditions of Being Me",
@@ -22,7 +22,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Terms & Conditions of Being Me",
     description: "A personal terms generator for the person who skips the fine print.",
-    images: ["/card/default/opengraph-image.png"],
+    images: ["/card/default.png"],
   },
 };
 
