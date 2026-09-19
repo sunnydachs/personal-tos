@@ -42,6 +42,11 @@ button:disabled {
   opacity: 0.65;
 }
 
+.tone-love {
+  --accent: #f5a9c0;
+  --accent-ink: #33131f;
+}
+
 .app-page {
   min-height: 100vh;
   min-height: 100dvh;
