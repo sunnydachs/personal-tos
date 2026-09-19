@@ -22,6 +22,57 @@ export const traitLabels: Record<TraitId, string> = {
   plan_cancel: "Graceful cancellation",
 };
 
+export const traitLabelsJa: Record<TraitId, string> = {
+  late_night: "深夜モード",
+  praise_boost: "褒められて性能向上",
+  reply_speed: "返信は読めない",
+  lunch: "ランチに期待",
+  event_sleep: "21時以降は撤退",
+  topic_lock: "ダイエット話題で固まる",
+  apology: "先回りして謝罪",
+  plan_cancel: "予定は優雅にキャンセル",
+};
+
+export const traitDescriptionsJa: Record<TraitId, string> = {
+  late_night: "一時的なシステム状態。ネガティブ発言は自動破棄。",
+  praise_boost: "褒めると性能が向上。ただし累積しない。",
+  reply_speed: "3秒から11営業日。予告はありません。",
+  lunch: "希望の表明であって、約束ではありません。",
+  event_sleep: "21時以降の参加はベストエフォート。",
+  topic_lock: "ダイエットの話題で即時フリーズ。",
+  apology: "何もないうちから謝っておく。",
+  plan_cancel: "キャンセルは仕様です。",
+};
+
+export const traitClausesJa: Record<TraitId, string> = {
+  late_night: "深夜に送信されたメッセージは一時的なシステム状態を反映しており、自動的にスルーされる。",
+  praise_boost: "褒められると性能が最大400%向上する。効果は一時的であり、累積しない。",
+  reply_speed: "返信時間は予告なく3秒から11営業日の間で変動する。",
+  lunch: "私とのランチの約束は希望の表明であり、確約ではない。",
+  event_sleep: "21時以降のイベントへの参加はベストエフォートであり、突然終了する場合がある。",
+  topic_lock: "'ダイエットどう？' の話題振りはシステムの即時フリーズを引き起こす。",
+  apology: "私はまだ起きていないことに対して予防的に謝罪する。これは既知の不具合である。",
+  plan_cancel: "私が予定をキャンセルするのは予期された動作であり、欠陥ではない。",
+};
+
+export const fixedDefinitionsJa = [
+  "'私' とは、上記に名義のある個人を指す。",
+  "'あなた' とは、私と関わるすべての者（友人、同僚、グループチャットを含むがこれに限らない）を指す。",
+  "'普通' とは、私の実際の動作と法的に別物である概念を指す。",
+];
+
+export const fixedProhibitedActsJa = [
+  "金曜日の退勤間際に、予期しない追加業務を頼むこと。",
+  "明らかにパニック状態の私に '暇そう' と言うこと。",
+  "改まった席でこの規約を読み上げること。",
+];
+
+export const warrantyDisclaimerJa =
+  "私は '現状有姿' で提供される。一貫した性格については何も保証しない。動作は予告なく変更される場合がある。";
+
+export const changesClauseJa =
+  "本規約は予告なく随時更新される。新しい私との継続的な関わりは新規約への同意とみなされる。これは交渉の余地がなく、あなたのせいでもない。";
+
 export const traitDescriptions: Record<TraitId, string> = {
   late_night: "Temporary system state; negative remarks are silently discarded.",
   praise_boost: "Performance spikes after compliments, with no stacking.",
@@ -109,6 +160,66 @@ export function assembleClauses(name: string, selectedTraitIds: TraitId[]) {
       clauses: [changesClause],
     },
   ];
+}
+
+export function assembleClausesJa(
+  name: string,
+  selectedTraitIds: TraitId[],
+) {
+  const normalizedTraitIds = selectedTraitIds.filter((traitId) =>
+    traitIds.includes(traitId),
+  );
+
+  return [
+    {
+      number: "第1条",
+      title: "目的",
+      clauses: [
+        "本規約は、上記の個人を適切に取り扱うために定める。",
+      ],
+    },
+    {
+      number: "第2条",
+      title: "定義",
+      clauses: fixedDefinitionsJa,
+    },
+    {
+      number: "第3条",
+      title: "取扱注意",
+      clauses: normalizedTraitIds.map((traitId) => traitClausesJa[traitId]),
+    },
+    {
+      number: "第4条",
+      title: "禁止事項",
+      clauses: fixedProhibitedActsJa,
+    },
+    {
+      number: "第5条",
+      title: "免責",
+      clauses: [warrantyDisclaimerJa],
+    },
+    {
+      number: "第6条",
+      title: "変更",
+      clauses: [changesClauseJa],
+    },
+  ];
+}
+
+export function assembleResultCardJa(
+  name: string,
+  selectedTraitIds: TraitId[],
+) {
+  const normalizedTraitIds = selectedTraitIds.filter((traitId) =>
+    traitIds.includes(traitId),
+  );
+
+  return {
+    name,
+    selectedTraitIds: normalizedTraitIds,
+    clauses: normalizedTraitIds.map((traitId) => traitClausesJa[traitId]),
+    changesClause: changesClauseJa,
+  };
 }
 
 export function assembleResultCard(name: string, selectedTraitIds: TraitId[]) {

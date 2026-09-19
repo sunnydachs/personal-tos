@@ -1,21 +1,21 @@
 import type { Metadata } from "next";
 import ResolutionTool from "@/components/resolution-tool";
 import { LanguageSwitch } from "@/components/lang-switch";
-import { enStrings } from "@/lib/i18n-strings";
+import { jaStrings } from "@/lib/i18n-strings";
 
 export const metadata: Metadata = {
-  title: "Today's Resolution Gacha",
-  description: "Roll a deterministic daily resolution card and share it as a PNG.",
+  title: "今日の解像度ガチャ",
+  description: "決定論的な今日の解像度カードをPNGで共有します。",
   openGraph: {
-    locale: "en_US",
-    title: "Today's Resolution Gacha",
-    description: "A deterministic daily resolution card.",
+    locale: "ja_JP",
+    title: "今日の解像度ガチャ",
+    description: "決定論的な今日の解像度カード。",
     images: [{ url: "/resolution/opengraph-image.png", width: 1200, height: 630 }],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Today's Resolution Gacha",
-    description: "A deterministic daily resolution card.",
+    title: "今日の解像度ガチャ",
+    description: "決定論的な今日の解像度カード。",
     images: ["/resolution/opengraph-image.png"],
   },
   alternates: {
@@ -27,11 +27,11 @@ export const metadata: Metadata = {
   },
 };
 
-export default function ResolutionPage() {
+export default function JapaneseResolutionPage() {
   return (
     <>
-      <LanguageSwitch lang="en" pathname="/resolution" />
-      <ResolutionTool lang="en" strings={enStrings.resolution} />
+      <LanguageSwitch lang="ja" pathname="/ja/resolution" />
+      <ResolutionTool lang="ja" strings={jaStrings.resolution} />
     </>
   );
 }
