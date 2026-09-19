@@ -26,10 +26,27 @@ export const metadata: Metadata = {
   },
 };
 
+const TOOL_LINKS = [
+  { href: "/", jaHref: "/ja", en: "Terms & Conditions", ja: "利用規約" },
+  { href: "/resolution", jaHref: "/ja/resolution", en: "Resolution Gacha", ja: "解像度ガチャ" },
+  { href: "/substitute", jaHref: "/ja/substitute", en: "Substitute Gacha", ja: "身代わりガチャ" },
+  { href: "/status", jaHref: "/ja/status", en: "Status Screen", ja: "ステータス画面" },
+];
+
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="en">
-      <body>{children}</body>
+      <body>
+        {children}
+        <nav className="site-tools" aria-label="Tools">
+          {TOOL_LINKS.map((tool) => (
+            <span key={tool.href} className="site-tools-item">
+              <a href={tool.href}>{tool.en}</a>
+              <a href={tool.jaHref} lang="ja">{tool.ja}</a>
+            </span>
+          ))}
+        </nav>
+      </body>
     </html>
   );
 }

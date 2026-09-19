@@ -274,9 +274,26 @@ function ResultCard({
           <p className="result-kicker">{strings.resultKicker}</p>
           <div className="result-rule" />
           <div className="result-ink" />
+          {card.clauses.length > 0 && (
+            <div className="result-clauses">
+              {card.clauses.map((clause, index) => (
+                <p className="result-clause-item" key={clause}>{index + 1}. {clause}</p>
+              ))}
+            </div>
+          )}
           <p className="result-clause">{strings.resultClue}</p>
         </div>
       </div>
+      <div className="result-actions gacha-actions">
+        <button className="primary-button" type="button" onClick={downloadPng} disabled={isExporting}>{strings.downloadPng}</button>
+        <button className="secondary-button" type="button" onClick={copyImage}>{strings.copyImage}</button>
+        <button className="secondary-button" type="button" onClick={copyLink}>{strings.copyLink}</button>
+      </div>
+      <div className="result-actions">
+        <button className="text-button" type="button" onClick={onEdit}>{strings.editTerms}</button>
+        <button className="text-button" type="button" onClick={randomize}>{strings.randomTerms}</button>
+      </div>
+      <p className={`action-notice ${notice ? "is-visible" : ""}`} role="status">{notice || " "}</p>
     </section>
   );
 }
