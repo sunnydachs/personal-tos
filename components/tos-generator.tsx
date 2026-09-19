@@ -189,11 +189,11 @@ function TermsModal({
           <p className="eyebrow">{strings.termsEyebrow}</p>
           <h1 id="terms-title">{strings.termsTitle}</h1>
         </div>
-        <span className="version-tag">{strings.effective} · {strings.documentId.replace("{version}", getVersion(state.name, state.traitIds))}</span>
+        <span className="version-tag">{strings.effective} · {strings.documentId.replace("{version}", getVersion(state.name, state.traitIds, tone))}</span>
       </header>
       <div className="terms-meta">
         <span>{strings.effective}</span>
-        <span>Document ID / ME-{state.name.toUpperCase().replace(/[^A-Z0-9]/g, "") || "ANON"}</span>
+        <span>Document ID / ME-{state.name.toUpperCase().replace(/\s+/g, "-") || "ANON"}</span>
       </div>
       <div className="clause-area" id="clause-area">
         <div className="clause-list">
@@ -393,6 +393,7 @@ export function TosGenerator({
     <main className="app-page">
       {screen === "setup" && (
         <section className="app-shell setup-shell" aria-labelledby="setup-title">
+          <ToneTabs tone={activeTone} onChange={setActiveTone} lang={lang} />
           <div className="setup-intro">
             <AppIcon />
             <div>
@@ -401,7 +402,6 @@ export function TosGenerator({
               <p className="setup-lead">{toneStrings.lead}</p>
             </div>
           </div>
-          <ToneTabs tone={activeTone} onChange={setActiveTone} lang={lang} />
           <form className="setup-form" onSubmit={continueToTerms}>
             <label className="field-label" htmlFor="name">{strings.nameLabel}</label>
             <input id="name" value={nameDraft} onChange={(event) => setNameDraft(event.target.value)} placeholder={strings.namePlaceholder} autoComplete="off" />

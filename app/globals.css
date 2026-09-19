@@ -63,14 +63,24 @@ button:disabled {
 .setup-shell {
   display: grid;
   grid-template-columns: minmax(240px, 0.72fr) minmax(0, 1.28fr);
+  grid-template-rows: auto 1fr;
   overflow: hidden;
 }
 
+.setup-shell .tone-tabs {
+  grid-column: 1 / -1;
+  grid-row: 1;
+  width: min(100%, 560px);
+  margin-top: 28px;
+}
+
 .setup-intro {
+  grid-column: 1;
+  grid-row: 2;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-  min-height: 672px;
+  justify-content: flex-start;
+  gap: 28px;
   padding: 42px;
   border-right: 1px solid var(--line);
   background: #111111;
@@ -114,7 +124,7 @@ button:disabled {
 
 .setup-intro h1 {
   max-width: 360px;
-  margin: 72px 0 24px;
+  margin: 0 0 24px;
   color: var(--ink);
   font-size: clamp(42px, 6vw, 72px);
   font-weight: 650;
@@ -136,6 +146,8 @@ button:disabled {
 }
 
 .setup-form {
+  grid-column: 2;
+  grid-row: 2;
   min-width: 0;
   padding: 42px;
   overflow-y: auto;
