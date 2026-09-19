@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://personal-tos.sunnydachs.workers.dev"),
+  metadataBase: new URL("https://daily-gacha.sunnydachs.workers.dev"),
   title: "Terms & Conditions of Being Me (Personal ToS Generator)",
   description: "Generate a shareable, suspiciously official set of terms for being you.",
   openGraph: {
