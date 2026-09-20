@@ -73,10 +73,49 @@ function drawFooter(
   context.fillText(shareLine, padding + 54, footerY + 30);
 }
 
+function drawResolutionIcon(
+  context: CanvasRenderingContext2D,
+  state: ResolutionCard["state"],
+) {
+  const x = 850;
+  const y = 165;
+  const size = 210;
+  context.fillStyle = "#272727";
+  context.beginPath();
+  context.roundRect(x - 70, y - 70, size, size, 28);
+  context.fill();
+
+  // Pixel grid density per state: fewer = lower resolution.
+  const gridSizes: Record<string, number> = {
+    "4K": 12,
+    FullHD: 9,
+    "720p": 6,
+    "144p": 3,
+    PixelArt: 2,
+  };
+  const cells = gridSizes[state.id] ?? 6;
+  const originX = x - 50;
+  const originY = y - 50;
+  const cellSize = 100 / cells;
+  for (let row = 0; row < cells; row += 1) {
+    for (let col = 0; col < cells; col += 1) {
+      const shade = (row + col) % 2 === 0 ? gachaDesign.accent : "#3a3a3a";
+      context.fillStyle = shade;
+      context.fillRect(
+        originX + col * cellSize,
+        originY + row * cellSize,
+        Math.max(2, cellSize - 3),
+        Math.max(2, cellSize - 3),
+      );
+    }
+  }
+}
+
 function drawResolutionCard(card: ResolutionCard) {
   const { canvas, context } = createCanvas();
   drawCard(context, "TODAY'S RESOLUTION GACHA");
   const { padding } = gachaDesign;
+  drawResolutionIcon(context, card.state);
   context.fillStyle = gachaDesign.ink;
   context.font = `700 ${gachaDesign.titleSize}px ${gachaDesign.fontFamily}`;
   context.fillText(card.state.label, padding + 54, padding + 150);

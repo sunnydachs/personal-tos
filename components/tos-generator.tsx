@@ -421,7 +421,7 @@ export function TosGenerator({
             </div>
             <TraitPicker selectedTraitIds={selectedTraitIds} onToggle={toggleTrait} strings={toneStrings} lang={lang} tone={activeTone} />
             <p className="setup-note">{toneStrings.setupNote}</p>
-            <button className="primary-button continue-button" type="submit">{toneStrings.continueLabel} <span aria-hidden="true">→</span></button>
+            <button className="primary-button continue-button" type="submit" disabled={selectedTraitIds.length < 3}>{toneStrings.continueLabel} <span aria-hidden="true">→</span></button>
           </form>
         </section>
       )}

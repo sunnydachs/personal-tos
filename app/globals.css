@@ -567,32 +567,33 @@ button:disabled {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  gap: 8px 18px;
+  gap: 10px;
   max-width: 720px;
-  margin: 24px auto 0;
-  padding: 16px 16px 28px;
-  color: var(--muted);
-  font-size: 12px;
+  margin: 28px auto 0;
+  padding: 16px 16px 32px;
 }
 
-.site-tools-item {
+.site-tools-chip {
   display: inline-flex;
+  align-items: center;
   gap: 8px;
-}
-
-.site-tools a {
+  padding: 10px 16px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: var(--surface);
   color: var(--muted);
+  font-size: 13px;
   text-decoration: none;
-  border-bottom: 1px dotted var(--line);
+  transition: border-color 0.15s ease, color 0.15s ease;
 }
 
-.site-tools a:hover {
+.site-tools-chip:hover {
   color: var(--ink);
-  border-bottom-color: var(--accent);
+  border-color: var(--accent);
 }
 
-.site-tools a[lang="ja"] {
-  opacity: 0.75;
+.site-tools-icon {
+  font-size: 15px;
 }
 
 .result-clause > span {
