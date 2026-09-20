@@ -5,6 +5,7 @@ export type GachaState = {
 
 const DEFAULT_NAME = "Anonymous";
 const DEFAULT_SEED = "daily";
+const STORAGE_KEY = "personal-tos:identity";
 
 function normalizeName(name: string) {
   return name.trim() || DEFAULT_NAME;
@@ -50,5 +51,28 @@ export function parseGachaState(search: string): GachaState | null {
 }
 
 export function getDefaultGachaState(): GachaState {
-  return { name: DEFAULT_NAME, seed: DEFAULT_SEED };
+  let name = DEFAULT_NAME;
+  let seed = DEFAULT_SEED;
+  try {
+    const stored = window.localStorage.getItem(STORAGE_KEY);
+    if (stored) {
+      const parsed = JSON.parse(stored) as { name?: unknown; seed?: unknown };
+      if (typeof parsed.name === "string" && parsed.name) name = parsed.name;
+      if (typeof parsed.seed === "string" && parsed.seed) seed = parsed.seed;
+    }
+  } catch {
+    // storage unavailable or malformed — defaults
+  }
+  return { name, seed };
+}
+
+export function saveGachaIdentity(name: string, seed: string) {
+  try {
+    window.localStorage.setItem(
+      STORAGE_KEY,
+      JSON.stringify({ name: normalizeName(name), seed: normalizeSeed(seed) }),
+    );
+  } catch {
+    // storage unavailable — skip persisting
+  }
 }

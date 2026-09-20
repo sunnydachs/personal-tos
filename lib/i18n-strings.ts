@@ -30,6 +30,8 @@ export type StatusStrings = {
   clipboardBlocked: string;
   statLabels: Record<"hp" | "mp" | "motivation" | "limit", string>;
   statDescriptions: Record<"hp" | "mp" | "motivation" | "limit", string>;
+  presetsLabel: string;
+  presets: ReadonlyArray<{ id: string; label: string; stats: { hp: number; mp: number; motivation: number; limit: number } }>;
   verdictOperational: string;
   verdictCritical: string;
   verdictCapacity: string;
@@ -371,6 +373,13 @@ const enStatus: StatusStrings = {
   clipboardBlocked: "Clipboard access was blocked.",
   statLabels: { hp: "HP", mp: "MP", motivation: "MOT", limit: "LIM" },
   statDescriptions: { hp: "Physical", mp: "Mental", motivation: "Motivation", limit: "Limit Gauge" },
+  presetsLabel: "Quick presets",
+  presets: [
+    { id: "monday", label: "Monday morning", stats: { hp: 40, mp: 25, motivation: 10, limit: 90 } },
+    { id: "friday", label: "Friday evening", stats: { hp: 55, mp: 70, motivation: 85, limit: 60 } },
+    { id: "payday", label: "Payday hero", stats: { hp: 80, mp: 90, motivation: 95, limit: 30 } },
+    { id: "vacation", label: "Day 1 of vacation", stats: { hp: 95, mp: 90, motivation: 100, limit: 5 } },
+  ],
   verdictOperational: "Fully operational. Suspiciously healthy.",
   verdictCritical: "Critical state. Do not schedule anything.",
   verdictCapacity: "Approaching capacity. Step away from the inbox.",
@@ -394,6 +403,13 @@ const jaStatus: StatusStrings = {
   clipboardBlocked: "クリップボードへのアクセスが拒否されました。",
   statLabels: { hp: "HP", mp: "MP", motivation: "MOT", limit: "LIM" },
   statDescriptions: { hp: "体力", mp: "メンタル", motivation: "意欲", limit: "限界ゲージ" },
+  presetsLabel: "クイックプリセット",
+  presets: [
+    { id: "monday", label: "月曜の朝", stats: { hp: 40, mp: 25, motivation: 10, limit: 90 } },
+    { id: "friday", label: "金曜の夜", stats: { hp: 55, mp: 70, motivation: 85, limit: 60 } },
+    { id: "payday", label: "給料日のヒーロー", stats: { hp: 80, mp: 90, motivation: 95, limit: 30 } },
+    { id: "vacation", label: "休暇1日目", stats: { hp: 95, mp: 90, motivation: 100, limit: 5 } },
+  ],
   verdictOperational: "全システム正常稼働。不自然なくらい健康。",
   verdictCritical: "危険状態。何も予定するな。",
   verdictCapacity: "容量に接近中。受信箱から離れろ。",

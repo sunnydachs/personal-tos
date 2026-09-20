@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import { substituteCharacters } from "@/lib/gacha-content";
 import {
   getDefaultGachaState,
+  saveGachaIdentity,
   encodeGachaState,
   parseGachaState,
   type GachaState,
@@ -84,6 +85,7 @@ export default function SubstituteTool({
     const defense = Math.floor(random() * 100) + 1;
     setState(nextState);
     setResult({ character, defense });
+    saveGachaIdentity(nextState.name, nextState.seed);
     window.history.replaceState(null, "", `/${lang === "ja" ? "ja/" : ""}${encodeGachaState(nextState.name, nextState.seed)}`);
     setNotice(lang === "ja" ? "身代わりが到着しました。" : "Your substitute has arrived.");
   }
