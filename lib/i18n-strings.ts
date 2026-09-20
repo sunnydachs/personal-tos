@@ -25,6 +25,9 @@ export type StatusStrings = {
   action: string;
   downloadPng: string;
   copyLink: string;
+  shareX: string;
+  shareLine: string;
+  shareNative: string;
   pngDownloaded: string;
   linkCopied: string;
   clipboardBlocked: string;
@@ -61,6 +64,9 @@ type GachaStrings = {
   action: string;
   downloadPng: string;
   copyLink: string;
+  shareX: string;
+  shareLine: string;
+  shareNative: string;
   pngDownloaded: string;
   linkCopied: string;
   clipboardBlocked: string;
@@ -117,6 +123,10 @@ const enTos: TosStrings = {
   downloadPng: "Download PNG",
   copyImage: "Copy image",
   copyLink: "Copy link",
+  shareX: "Share on X",
+  shareLine: "Share on LINE",
+  shareNative: "Share",
+  shareText: "Check my personal terms: {name}",
   editTerms: "Edit terms",
   randomTerms: "See a random person's terms",
   rendering: "Rendering your terms...",
@@ -178,6 +188,10 @@ const jaTos: TosStrings = {
   downloadPng: "PNGを保存",
   copyImage: "画像をコピー",
   copyLink: "リンクをコピー",
+  shareX: "Xでシェア",
+  shareLine: "LINEでシェア",
+  shareNative: "共有",
+  shareText: "私の利用規約をチェック: {name}",
   editTerms: "規約を編集",
   randomTerms: "ランダムな誰かの規約を見る",
   rendering: "規約をレンダリング中...",
@@ -222,6 +236,10 @@ const enResolution: ResolutionStrings = {
   action: "Check today's resolution",
   downloadPng: "Download PNG",
   copyLink: "Copy link",
+  shareX: "Share on X",
+  shareLine: "Share on LINE",
+  shareNative: "Share",
+  shareText: "Check my personal terms: {name}",
   pngDownloaded: "PNG downloaded.",
   linkCopied: "Share link copied.",
   clipboardBlocked: "Clipboard access was blocked.",
@@ -257,6 +275,10 @@ const jaResolution: ResolutionStrings = {
   action: "今日の解像度をチェック",
   downloadPng: "PNGを保存",
   copyLink: "リンクをコピー",
+  shareX: "Xでシェア",
+  shareLine: "LINEでシェア",
+  shareNative: "共有",
+  shareText: "私の利用規約をチェック: {name}",
   pngDownloaded: "PNGを保存しました。",
   linkCopied: "共有リンクをコピーしました。",
   clipboardBlocked: "クリップボードへのアクセスが拒否されました。",
@@ -292,6 +314,10 @@ const enSubstitute: SubstituteStrings = {
   action: "Summon my substitute",
   downloadPng: "Download PNG",
   copyLink: "Copy link",
+  shareX: "Share on X",
+  shareLine: "Share on LINE",
+  shareNative: "Share",
+  shareText: "Check my personal terms: {name}",
   pngDownloaded: "PNG downloaded.",
   linkCopied: "Share link copied.",
   clipboardBlocked: "Clipboard access was blocked.",
@@ -330,6 +356,10 @@ const jaSubstitute: SubstituteStrings = {
   action: "身代わりを召喚",
   downloadPng: "PNGを保存",
   copyLink: "リンクをコピー",
+  shareX: "Xでシェア",
+  shareLine: "LINEでシェア",
+  shareNative: "共有",
+  shareText: "私の利用規約をチェック: {name}",
   pngDownloaded: "PNGを保存しました。",
   linkCopied: "共有リンクをコピーしました。",
   clipboardBlocked: "クリップボードへのアクセスが拒否されました。",
@@ -368,6 +398,10 @@ const enStatus: StatusStrings = {
   action: "Render my status",
   downloadPng: "Download PNG",
   copyLink: "Copy link",
+  shareX: "Share on X",
+  shareLine: "Share on LINE",
+  shareNative: "Share",
+  shareText: "Check my personal terms: {name}",
   pngDownloaded: "PNG downloaded.",
   linkCopied: "Share link copied.",
   clipboardBlocked: "Clipboard access was blocked.",
@@ -398,6 +432,10 @@ const jaStatus: StatusStrings = {
   action: "ステータスを表示",
   downloadPng: "PNGを保存",
   copyLink: "リンクをコピー",
+  shareX: "Xでシェア",
+  shareLine: "LINEでシェア",
+  shareNative: "共有",
+  shareText: "私の利用規約をチェック: {name}",
   pngDownloaded: "PNGを保存しました。",
   linkCopied: "共有リンクをコピーしました。",
   clipboardBlocked: "クリップボードへのアクセスが拒否されました。",

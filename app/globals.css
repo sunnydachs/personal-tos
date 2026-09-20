@@ -855,6 +855,47 @@ button:disabled {
   gap: 14px 20px;
 }
 
+.share-buttons {
+  display: inline-flex;
+  gap: 8px;
+}
+
+.share-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 9px 14px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: var(--surface);
+  color: var(--ink);
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: opacity 0.15s ease, border-color 0.15s ease;
+}
+
+.share-button:hover {
+  opacity: 0.85;
+  border-color: currentColor;
+}
+
+.share-x svg {
+  color: #e7e7e7;
+}
+
+.share-line {
+  color: #06c755;
+}
+
+.share-line svg {
+  color: #06c755;
+}
+
+.share-native {
+  color: var(--muted);
+}
+
 .status-presets {
   display: flex;
   flex-wrap: wrap;

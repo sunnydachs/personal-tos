@@ -30,6 +30,7 @@ import {
 } from "@/lib/tos-state";
 import { formatTemplate } from "@/lib/i18n";
 import type { Lang } from "@/lib/i18n-strings";
+import { ShareButtons } from "@/components/share-buttons";
 
 type Screen = "setup" | "terms" | "result";
 export type Tone = "corporate" | "love";
@@ -63,6 +64,10 @@ type TosStrings = {
   downloadPng: string;
   copyImage: string;
   copyLink: string;
+  shareX: string;
+  shareLine: string;
+  shareNative: string;
+  shareText: string;
   editTerms: string;
   randomTerms: string;
   rendering: string;
@@ -337,6 +342,11 @@ function ResultCard({
         <button className="primary-button" type="button" onClick={downloadPng} disabled={isExporting}>{strings.downloadPng}</button>
         <button className="secondary-button" type="button" onClick={copyImage}>{strings.copyImage}</button>
         <button className="secondary-button" type="button" onClick={copyLink}>{strings.copyLink}</button>
+        <ShareButtons
+          url={shareUrl}
+          text={strings.shareText.replace("{name}", state.name)}
+          labels={{ shareX: strings.shareX, shareLine: strings.shareLine, shareNative: strings.shareNative }}
+        />
       </div>
       <div className="result-actions">
         <button className="text-button" type="button" onClick={onEdit}>{strings.editTerms}</button>
