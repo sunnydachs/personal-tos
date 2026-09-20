@@ -161,11 +161,11 @@ export function getDefaultState(): GeneratorState {
   try {
     const stored = window.localStorage.getItem("personal-tos:identity");
     if (stored) {
-      const parsed = JSON.parse(stored) as { name?: string };
-      if (parsed.name) name = parsed.name;
+      const parsed = JSON.parse(stored) as { name?: unknown };
+      if (typeof parsed.name === "string" && parsed.name) name = parsed.name;
     }
   } catch {
-    // storage unavailable — defaults
+    // storage unavailable or malformed — defaults
   }
   return { name, traitIds: [] };
 }

@@ -396,10 +396,11 @@ export function TosGenerator({
     window.history.replaceState(null, "", `/${lang === "ja" ? "ja?" : "?"}${encodeState(nextState.name, nextState.traitIds, activeTone)}`);
     try {
       const stored = window.localStorage.getItem("personal-tos:identity");
-      const parsed = stored ? JSON.parse(stored) as { seed?: string } : {};
-      window.localStorage.setItem("personal-tos:identity", JSON.stringify({ name: nextState.name, seed: parsed.seed ?? "daily" }));
+      const parsed = stored ? JSON.parse(stored) as { seed?: unknown } : {};
+      const seed = typeof parsed.seed === "string" && parsed.seed ? parsed.seed : "daily";
+      window.localStorage.setItem("personal-tos:identity", JSON.stringify({ name: nextState.name, seed }));
     } catch {
-      // storage unavailable — skip persisting
+      // storage unavailable or malformed — skip persisting
     }
     setScreen("terms");
   }

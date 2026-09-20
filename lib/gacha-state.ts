@@ -56,12 +56,12 @@ export function getDefaultGachaState(): GachaState {
   try {
     const stored = window.localStorage.getItem(STORAGE_KEY);
     if (stored) {
-      const parsed = JSON.parse(stored) as { name?: string; seed?: string };
-      if (parsed.name) name = parsed.name;
-      if (parsed.seed) seed = parsed.seed;
+      const parsed = JSON.parse(stored) as { name?: unknown; seed?: unknown };
+      if (typeof parsed.name === "string" && parsed.name) name = parsed.name;
+      if (typeof parsed.seed === "string" && parsed.seed) seed = parsed.seed;
     }
   } catch {
-    // storage unavailable — defaults
+    // storage unavailable or malformed — defaults
   }
   return { name, seed };
 }
