@@ -260,7 +260,7 @@ function ResultCard({
   );
   const [notice, setNotice] = useState("");
   const [isExporting, setIsExporting] = useState(false);
-  const shareUrl = `/${lang === "ja" ? "ja?" : ""}${encodeState(state.name, state.traitIds, tone)}`;
+  const shareUrl = `/${lang === "ja" ? "ja?" : "?"}${encodeState(state.name, state.traitIds, tone)}`;
 
   async function downloadPng() {
     setIsExporting(true);
@@ -310,8 +310,8 @@ function ResultCard({
 
   function randomize() {
     const shuffled = [...traitIds].sort(() => Math.random() - 0.5);
-    const count = 2 + Math.floor(Math.random() * 3);
-    window.location.assign(`/${lang === "ja" ? "ja?" : ""}${encodeState(state.name, shuffled.slice(0, count), tone)}`);
+    const count = 3 + Math.floor(Math.random() * 3);
+    window.location.assign(`/${lang === "ja" ? "ja?" : "?"}${encodeState(state.name, shuffled.slice(0, count), tone)}`);
   }
 
   return (
@@ -393,7 +393,15 @@ export function TosGenerator({
     event.preventDefault();
     const nextState = { name: nameDraft.trim() || "Anonymous", traitIds: selectedTraitIds, tone: activeTone };
     setState(nextState);
-    window.history.replaceState(null, "", `/${lang === "ja" ? "ja?" : ""}${encodeState(nextState.name, nextState.traitIds, activeTone)}`);
+    window.history.replaceState(null, "", `/${lang === "ja" ? "ja?" : "?"}${encodeState(nextState.name, nextState.traitIds, activeTone)}`);
+    try {
+      const stored = window.localStorage.getItem("personal-tos:identity");
+      const parsed = stored ? JSON.parse(stored) as { seed?: unknown } : {};
+      const seed = typeof parsed.seed === "string" && parsed.seed ? parsed.seed : "daily";
+      window.localStorage.setItem("personal-tos:identity", JSON.stringify({ name: nextState.name, seed }));
+    } catch {
+      // storage unavailable or malformed — skip persisting
+    }
     setScreen("terms");
   }
   function agreeToTerms() { setScreen("result"); }

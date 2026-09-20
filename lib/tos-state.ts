@@ -157,5 +157,15 @@ export function parseCompactState(
 }
 
 export function getDefaultState(): GeneratorState {
-  return { name: DEFAULT_NAME, traitIds: [] };
+  let name = DEFAULT_NAME;
+  try {
+    const stored = window.localStorage.getItem("personal-tos:identity");
+    if (stored) {
+      const parsed = JSON.parse(stored) as { name?: unknown };
+      if (typeof parsed.name === "string" && parsed.name) name = parsed.name;
+    }
+  } catch {
+    // storage unavailable or malformed — defaults
+  }
+  return { name, traitIds: [] };
 }
