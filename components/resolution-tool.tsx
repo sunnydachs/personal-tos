@@ -3,6 +3,7 @@
 import dynamic from "next/dynamic";
 import { useEffect, useMemo, useState } from "react";
 import { resolutionStates } from "@/lib/gacha-content";
+import { ShareButtons } from "@/components/share-buttons";
 import {
   getDefaultGachaState,
   saveGachaIdentity,
@@ -145,6 +146,11 @@ export default function ResolutionTool({
               <div className="result-actions gacha-actions">
                 <button className="primary-button" type="button" onClick={downloadPng}>{strings.downloadPng}</button>
                 <button className="secondary-button" type="button" onClick={copyLink}>{strings.copyLink}</button>
+                <ShareButtons
+                  url={shareUrl}
+                  text={card.shareLine}
+                  labels={{ shareX: strings.shareX, shareLine: strings.shareLine, shareNative: strings.shareNative }}
+                />
                 <p className={`action-notice ${notice ? "is-visible" : ""}`} role="status">{notice || " "}</p>
               </div>
               <p className="reset-note">{strings.resetNote}</p>
