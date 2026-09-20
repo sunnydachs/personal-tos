@@ -2,7 +2,7 @@
 
 import dynamic from "next/dynamic";
 import { useEffect, useMemo, useState } from "react";
-import { resolutionStates } from "@/lib/gacha-content";
+import { resolutionStates, resolutionIcons } from "@/lib/gacha-content";
 import { ShareButtons } from "@/components/share-buttons";
 import {
   getDefaultGachaState,
@@ -136,12 +136,15 @@ export default function ResolutionTool({
               <div className="gacha-card">
                 <p className="eyebrow accent-text">{strings.cardEyebrow} {dayString}</p>
                 <h2>{result ? strings.states[result.id] : ""}</h2>
+                {result?.id && (
+                  <img className="card-verdict-icon" src={resolutionIcons[result.id]} alt="" width={96} height={96} aria-hidden="true" />
+                )}
                 <p>{result ? strings.stateDescription[result.id] : ""}</p>
                 <div className="gacha-card-meta">
                   <span>{state.name}</span>
                   <span>{formatTemplate(strings.cardDate, { date: dayString })}</span>
                 </div>
-                <p className="share-line">{card.shareLine}</p>
+                <p className="gacha-share-line">{card.shareLine}</p>
               </div>
               <div className="result-actions gacha-actions">
                 <button className="primary-button" type="button" onClick={downloadPng}>{strings.downloadPng}</button>

@@ -131,7 +131,9 @@ export default function SubstituteTool({
             <>
               <div className="gacha-card substitute-card">
                 <p className="eyebrow accent-text">{strings.cardEyebrow} {dayString}</p>
-                <div className="substitute-icon" aria-hidden="true">{result?.character.symbol}</div>
+                {result?.character.icon && (
+                  <img className="substitute-icon" src={result.character.icon} alt="" width={74} height={74} aria-hidden="true" />
+                )}
                 <h2>{result ? strings.characters[result.character.id as SubstituteCharacterId] : ""}</h2>
                 <p>{result ? strings.characterDescriptions[result.character.id as SubstituteCharacterId] : ""}</p>
                 <div className="gacha-card-meta">
@@ -139,7 +141,7 @@ export default function SubstituteTool({
                   <span>{formatTemplate(strings.cardDate, { date: dayString })}</span>
                   <span>{strings.defenseLabel} · {result?.defense}%</span>
                 </div>
-                <p className="share-line">{card.shareLine}</p>
+                <p className="gacha-share-line">{card.shareLine}</p>
               </div>
               <div className="result-actions gacha-actions">
                 <button className="primary-button" type="button" onClick={downloadPng}>{strings.downloadPng}</button>

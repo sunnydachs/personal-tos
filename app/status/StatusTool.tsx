@@ -182,7 +182,7 @@ export default function StatusTool() {
             </div>
             <p className="verdict">{verdict}</p>
             <div className="gacha-card-meta"><span>{state.name}</span><span>{`Status of ${dayString}`}</span></div>
-            <p className="share-line">{card.shareLine}</p>
+            <p className="gacha-share-line">{card.shareLine}</p>
           </div>
           <div className="result-actions gacha-actions">
             <button className="primary-button" type="button" onClick={downloadPng}>Download PNG</button>
