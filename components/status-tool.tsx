@@ -1,6 +1,7 @@
 "use client";
 
 import { FormEvent, useEffect, useState } from "react";
+import { ShareButtons } from "@/components/share-buttons";
 import {
   getDefaultGachaState,
   saveGachaIdentity,
@@ -76,6 +77,12 @@ export default function StatusTool({
   const [nameDraft, setNameDraft] = useState(state.name === "Anonymous" ? "" : state.name);
   const [seedDraft, setSeedDraft] = useState(state.seed === "daily" ? "" : state.seed);
   const [notice, setNotice] = useState("");
+  const statusParams = new URLSearchParams(encodeGachaState(state.name, state.seed));
+  statusParams.set("hp", String(stats.hp));
+  statusParams.set("mp", String(stats.mp));
+  statusParams.set("mot", String(stats.motivation));
+  statusParams.set("lim", String(stats.limit));
+  const shareUrl = `/${lang === "ja" ? "ja/" : ""}${statusParams.toString()}`;
   const dayString = getDayString();
   const verdict = getStatusVerdict(stats, strings);
   const card: StatusCard = {
@@ -135,12 +142,7 @@ export default function StatusTool({
   }
 
   async function copyLink() {
-    const params = new URLSearchParams(encodeGachaState(state.name, state.seed));
-    params.set("hp", String(stats.hp));
-    params.set("mp", String(stats.mp));
-    params.set("mot", String(stats.motivation));
-    params.set("lim", String(stats.limit));
-    await navigator.clipboard.writeText(`${window.location.origin}/${lang === "ja" ? "ja/" : ""}${params.toString()}`);
+    await navigator.clipboard.writeText(`${window.location.origin}${shareUrl}`);
     setNotice(strings.linkCopied);
   }
 
@@ -209,6 +211,11 @@ export default function StatusTool({
           <div className="result-actions gacha-actions">
             <button className="primary-button" type="button" onClick={downloadPng}>{strings.downloadPng}</button>
             <button className="secondary-button" type="button" onClick={copyLink}>{strings.copyLink}</button>
+            <ShareButtons
+              url={shareUrl}
+              text={card.shareLine}
+              labels={{ shareX: strings.shareX, shareLine: strings.shareLine, shareNative: strings.shareNative }}
+            />
             <p className={`action-notice ${notice ? "is-visible" : ""}`} role="status">{notice || " "}</p>
           </div>
         </div>
