@@ -82,7 +82,7 @@ export default function StatusTool({
   statusParams.set("mp", String(stats.mp));
   statusParams.set("mot", String(stats.motivation));
   statusParams.set("lim", String(stats.limit));
-  const shareUrl = `/${lang === "ja" ? "ja/" : ""}${statusParams.toString()}`;
+  const shareUrl = `/${lang === "ja" ? "ja?" : "?"}${statusParams.toString()}`;
   const dayString = getDayString();
   const verdict = getStatusVerdict(stats, strings);
   const card: StatusCard = {
@@ -125,7 +125,7 @@ export default function StatusTool({
     params.set("mp", String(stats.mp));
     params.set("mot", String(stats.motivation));
     params.set("lim", String(stats.limit));
-    window.history.replaceState(null, "", `/${lang === "ja" ? "ja/" : ""}${params.toString()}`);
+    window.history.replaceState(null, "", `/${lang === "ja" ? "ja?" : "?"}${params.toString()}`);
     saveGachaIdentity(nextState.name, nextState.seed);
     setNotice(lang === "ja" ? "ステータスを表示しました。" : "Status rendered.");
   }

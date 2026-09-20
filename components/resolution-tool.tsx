@@ -57,7 +57,7 @@ export default function ResolutionTool({
   );
   const [notice, setNotice] = useState("");
   const dayString = getDayString();
-  const shareUrl = `/${lang === "ja" ? "ja" : ""}${encodeGachaState(state.name, state.seed)}`;
+  const shareUrl = `/${lang === "ja" ? "ja?" : "?"}${encodeGachaState(state.name, state.seed)}`;
   const card: ResolutionCard | null = result
     ? {
         name: state.name,
@@ -79,7 +79,7 @@ export default function ResolutionTool({
     window.history.replaceState(
       null,
       "",
-      `/${lang === "ja" ? "ja/" : ""}${encodeGachaState(nextState.name, nextState.seed)}`,
+      `/${lang === "ja" ? "ja?" : "?"}${encodeGachaState(nextState.name, nextState.seed)}`,
     );
   }
 
