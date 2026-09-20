@@ -3,6 +3,7 @@
 import { FormEvent, useEffect, useState } from "react";
 import {
   getDefaultGachaState,
+  saveGachaIdentity,
   encodeGachaState,
   parseGachaState,
   type GachaState,
@@ -101,6 +102,10 @@ export default function StatusTool({
     setForm((current) => ({ ...current, stats: { ...current.stats, [key]: value } }));
   }
 
+  function applyPreset(presetStats: Stats) {
+    setForm((current) => ({ ...current, stats: presetStats }));
+  }
+
   function renderStatus(event: FormEvent) {
     event.preventDefault();
     const nextState = {
@@ -114,6 +119,7 @@ export default function StatusTool({
     params.set("mot", String(stats.motivation));
     params.set("lim", String(stats.limit));
     window.history.replaceState(null, "", `/${lang === "ja" ? "ja/" : ""}${params.toString()}`);
+    saveGachaIdentity(nextState.name, nextState.seed);
     setNotice(lang === "ja" ? "ステータスを表示しました。" : "Status rendered.");
   }
 
@@ -163,6 +169,19 @@ export default function StatusTool({
                 <input id={`status-${key}`} type="range" min="0" max="100" value={stats[key]} onChange={(event) => updateStats(key, Number(event.target.value))} />
                 <output>{stats[key]}</output>
               </label>
+            ))}
+          </div>
+          <div className="status-presets">
+            <span className="status-presets-label">{strings.presetsLabel}</span>
+            {strings.presets.map((preset) => (
+              <button
+                className="status-preset-chip"
+                key={preset.id}
+                type="button"
+                onClick={() => applyPreset({ ...preset.stats })}
+              >
+                {preset.label}
+              </button>
             ))}
           </div>
           <button className="primary-button gacha-button" type="submit">{strings.action} <span aria-hidden="true">→</span></button>

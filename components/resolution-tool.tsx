@@ -5,6 +5,7 @@ import { useEffect, useMemo, useState } from "react";
 import { resolutionStates } from "@/lib/gacha-content";
 import {
   getDefaultGachaState,
+  saveGachaIdentity,
   encodeGachaState,
   parseGachaState,
   type GachaState,
@@ -89,6 +90,7 @@ export default function ResolutionTool({
     setState(nextState);
     setResult(getInitialResult(nextState, dayString));
     updateUrl(nextState);
+    saveGachaIdentity(nextState.name, nextState.seed);
     setNotice(lang === "ja" ? "今日の解像度が準備できました。" : "Today's resolution is ready.");
   }
 
