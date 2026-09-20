@@ -982,7 +982,7 @@ button:disabled {
 
 .status-bar {
   display: grid;
-  grid-template-columns: 56px 1fr 30px;
+  grid-template-columns: 18px 28px minmax(0, 1fr) 30px;
   align-items: center;
   gap: 10px;
   color: var(--muted);
