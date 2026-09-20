@@ -10,12 +10,13 @@ type ShareButtonsProps = {
 };
 
 export function ShareButtons({ url, text, labels, className = "" }: ShareButtonsProps) {
-  const absoluteUrl = url.startsWith("http") ? url : `${window.location.origin}${url}`;
-  const shareText = `${text}\n${absoluteUrl}`;
+  // Resolve the absolute URL lazily inside handlers: window is unavailable during SSR.
+  const absoluteUrl = () => (url.startsWith("http") ? url : `${window.location.origin}${url}`);
+  const shareText = () => `${text}\n${absoluteUrl()}`;
 
   function openX() {
     window.open(
-      `https://twitter.com/intent/tweet?text=${encodeURIComponent(shareText)}`,
+      `https://twitter.com/intent/tweet?text=${encodeURIComponent(shareText())}`,
       "_blank",
       "noopener,noreferrer",
     );
@@ -23,7 +24,7 @@ export function ShareButtons({ url, text, labels, className = "" }: ShareButtons
 
   function openLine() {
     window.open(
-      `https://line.me/R/msg/text/?${encodeURIComponent(shareText)}`,
+      `https://line.me/R/msg/text/?${encodeURIComponent(shareText())}`,
       "_blank",
       "noopener,noreferrer",
     );
@@ -32,7 +33,7 @@ export function ShareButtons({ url, text, labels, className = "" }: ShareButtons
   async function nativeShare() {
     if (typeof navigator.share === "function") {
       try {
-        await navigator.share({ title: text, text: shareText, url: absoluteUrl });
+        await navigator.share({ title: text, text: shareText(), url: absoluteUrl() });
         return;
       } catch {
         // user cancelled — no-op
