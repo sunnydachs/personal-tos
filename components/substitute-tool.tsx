@@ -55,7 +55,7 @@ export default function SubstituteTool({
   });
   const [notice, setNotice] = useState("");
   const dayString = getDayString();
-  const shareUrl = `/${lang === "ja" ? "ja" : ""}${encodeGachaState(state.name, state.seed)}`;
+  const shareUrl = `/${lang === "ja" ? "ja?" : "?"}${encodeGachaState(state.name, state.seed)}`;
   const card: SubstituteCard | null = result
     ? {
         name: state.name,
@@ -87,7 +87,7 @@ export default function SubstituteTool({
     setState(nextState);
     setResult({ character, defense });
     saveGachaIdentity(nextState.name, nextState.seed);
-    window.history.replaceState(null, "", `/${lang === "ja" ? "ja/" : ""}${encodeGachaState(nextState.name, nextState.seed)}`);
+    window.history.replaceState(null, "", `/${lang === "ja" ? "ja?" : "?"}${encodeGachaState(nextState.name, nextState.seed)}`);
     setNotice(lang === "ja" ? "身代わりが到着しました。" : "Your substitute has arrived.");
   }
 
