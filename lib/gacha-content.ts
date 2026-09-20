@@ -36,36 +36,42 @@ export const substituteCharacters = [
     id: "chihuahua",
     label: "The Unbreakable Chihuahua",
     symbol: "🐕",
+    icon: "/icons/char-chihuahua.png",
     description: "Small, loud, and immune to unreasonable criticism.",
   },
   {
     id: "tanuki",
     label: "The Apology Specialist Tanuki",
     symbol: "🦝",
+    icon: "/icons/char-tanuki.png",
     description: "Bows at 45 degrees, has never once meant it.",
   },
   {
     id: "intern",
     label: "The Friday ExcuseIntern",
     symbol: "🧑‍💻",
+    icon: "/icons/char-intern.png",
     description: "Fresh, eager, and disposable. Takes all Friday blame.",
   },
   {
     id: "ghost",
     label: "The Time-Loss Ghost",
     symbol: "👻",
+    icon: "/icons/char-ghost.png",
     description: "Was not technically present during the incident.",
   },
   {
     id: "senior",
     label: "The Senior Excuser",
     symbol: "🧓",
+    icon: "/icons/char-senior.png",
     description: "20 years of experience saying 'that's on me' for things that weren't.",
   },
   {
     id: "meeting",
     label: "The Mandatory Meeting",
     symbol: "📋",
+    icon: "/icons/char-meeting.png",
     description: "Blame cannot reach you inside a meeting that could've been an email.",
   },
 ] as const;
@@ -100,3 +106,48 @@ export function getStatusVerdict(stats: { hp: number; mp: number; motivation: nu
 
   return "Standard modern human state.";
 }
+
+export type StatusVerdictId = "operational" | "standard" | "capacity" | "critical";
+
+export function getStatusVerdictId(stats: { hp: number; mp: number; motivation: number; limit: number }): StatusVerdictId {
+  if (
+    stats.hp > 60
+    && stats.mp > 60
+    && stats.motivation > 60
+    && stats.limit > 60
+  ) {
+    return "operational";
+  }
+
+  if (stats.hp < 30 || stats.mp < 30) {
+    return "critical";
+  }
+
+  if (stats.limit > 80) {
+    return "capacity";
+  }
+
+  return "standard";
+}
+
+export const statusVerdictIcons: Record<StatusVerdictId, string> = {
+  operational: "/icons/verdict-operational.png",
+  standard: "/icons/verdict-standard.png",
+  capacity: "/icons/verdict-capacity.png",
+  critical: "/icons/verdict-critical.png",
+};
+
+export const statusStatIcons: Record<"hp" | "mp" | "motivation" | "limit", string> = {
+  hp: "/icons/stat-hp.png",
+  mp: "/icons/stat-mp.png",
+  motivation: "/icons/stat-mot.png",
+  limit: "/icons/stat-lim.png",
+};
+
+export const resolutionIcons: Record<(typeof resolutionStates)[number]["id"], string> = {
+  "4K": "/icons/res-4k.png",
+  FullHD: "/icons/res-fullhd.png",
+  "720p": "/icons/res-720p.png",
+  "144p": "/icons/res-144p.png",
+  PixelArt: "/icons/res-pixelart.png",
+};

@@ -780,7 +780,7 @@ button:disabled {
   overflow-wrap: anywhere;
 }
 
-.gacha-card > p:not(.eyebrow, .share-line) {
+.gacha-card > p:not(.eyebrow, .gacha-share-line) {
   max-width: 570px;
   margin: 0;
   color: #d6d3cc;
@@ -795,7 +795,7 @@ button:disabled {
   margin-top: 28px;
 }
 
-.share-line {
+.gacha-share-line {
   margin: 22px 0 0;
   padding-top: 17px;
   border-top: 1px solid var(--line);
@@ -837,10 +837,14 @@ button:disabled {
 
 .status-form {
   display: grid;
-  grid-template-columns: minmax(180px, 0.8fr) minmax(0, 1.2fr) auto;
+  grid-template-columns: minmax(180px, 0.9fr) minmax(0, 1.6fr);
   align-items: end;
-  gap: 14px 20px;
+  gap: 14px 22px;
   border-bottom: 1px solid var(--line);
+}
+
+.status-presets {
+  grid-column: 1 / -1;
 }
 
 .status-fields {
@@ -880,19 +884,19 @@ button:disabled {
   border-color: currentColor;
 }
 
-.share-x svg {
+.share-button.share-x svg {
   color: #e7e7e7;
 }
 
-.share-line {
+.share-button.share-line {
   color: #06c755;
 }
 
-.share-line svg {
+.share-button.share-line svg {
   color: #06c755;
 }
 
-.share-native {
+.share-button.share-native {
   color: var(--muted);
 }
 
@@ -978,7 +982,7 @@ button:disabled {
 
 .status-bar {
   display: grid;
-  grid-template-columns: 38px 1fr 30px;
+  grid-template-columns: 56px 1fr 30px;
   align-items: center;
   gap: 10px;
   color: var(--muted);

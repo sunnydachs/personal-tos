@@ -10,6 +10,7 @@ import {
   type GachaState,
 } from "@/lib/gacha-state";
 import type { StatusCard } from "@/lib/gacha-canvas";
+import { getStatusVerdictId, statusVerdictIcons, statusStatIcons } from "@/lib/gacha-content";
 import { formatTemplate } from "@/lib/i18n";
 import type { Lang, StatusStrings } from "@/lib/i18n-strings";
 
@@ -85,6 +86,7 @@ export default function StatusTool({
   const shareUrl = `/${lang === "ja" ? "ja?" : "?"}${statusParams.toString()}`;
   const dayString = getDayString();
   const verdict = getStatusVerdict(stats, strings);
+  const verdictId = getStatusVerdictId(stats);
   const card: StatusCard = {
     name: state.name,
     date: `${dayString}`,
@@ -192,11 +194,13 @@ export default function StatusTool({
           <div className="gacha-card status-card">
             <p className="eyebrow accent-text">STATUS OF {dayString}</p>
             <h2>{state.name}</h2>
+            <img className="card-verdict-icon" src={statusVerdictIcons[verdictId]} alt="" width={96} height={96} aria-hidden="true" />
             <div className="status-bars">
               {(["hp", "mp", "motivation", "limit"] as const).map((key) => {
                 const inverted = key === "limit";
                 return (
                   <div className="status-bar" key={key}>
+                    <img src={statusStatIcons[key]} alt="" width={18} height={18} aria-hidden="true" />
                     <span>{strings.statLabels[key]}</span>
                     <div><i className={`status-fill status-${inverted ? "inverted-" : ""}${stats[key] > 60 ? "high" : stats[key] >= 30 ? "medium" : "low"}`} style={{ width: `${stats[key]}%` }} /></div>
                     <strong>{stats[key]}</strong>
@@ -206,7 +210,7 @@ export default function StatusTool({
             </div>
             <p className="verdict">{verdict}</p>
             <div className="gacha-card-meta"><span>{state.name}</span><span>{dayString}</span></div>
-            <p className="share-line">{card.shareLine}</p>
+            <p className="gacha-share-line">{card.shareLine}</p>
           </div>
           <div className="result-actions gacha-actions">
             <button className="primary-button" type="button" onClick={downloadPng}>{strings.downloadPng}</button>
