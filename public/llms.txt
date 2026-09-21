@@ -1,0 +1,22 @@
+# Personal ToS — Terms & Conditions of Being Me
+
+> Parody generator that renders your own Terms of Service as the exact UI everyone
+> scrolls past on app launches — long clause text, "I agree" button, fine print —
+> then exports it as one finished shareable image.
+> Deterministic generation, zero runtime AI, no accounts, no tracking.
+
+The site has four tools. Each runs fully client-side, needs no login, and produces
+a shareable PNG or link. State is encoded in the URL (no backend, no cookies).
+Japanese versions of every tool live under /ja/.
+
+## Tools
+
+- [Personal ToS generator](https://personal-tos.sunnydachs.workers.dev/): render your own Terms & Conditions of Being Me as an app-launch ToS modal; export as PNG or shareable link. 8 operating-condition traits.
+- [Today (resolution card)](https://personal-tos.sunnydachs.workers.dev/resolution): roll a deterministic daily resolution card and share it as a PNG.
+- [Take The Blame For Me Gacha](https://personal-tos.sunnydachs.workers.dev/substitute): summon a deterministic daily substitute and share the blame card.
+- [Modern Human Status Screen](https://personal-tos.sunnydachs.workers.dev/status): render an RPG-style status screen for a modern human (HP/MP, resolution, verdict icons) and share it as a PNG.
+
+## Optional
+
+- [Japanese version](https://personal-tos.sunnydachs.workers.dev/ja): 全ツールの日本語版。
+- [Source code](https://github.com/sunnydachs/personal-tos): Next.js 16 + vinext on Cloudflare Workers; vitest-tested state codec and clause assembly; MIT-style parody content.
