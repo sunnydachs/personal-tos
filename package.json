@@ -21,7 +21,7 @@
     "vinext": "^1.0.0-beta.11"
   },
   "devDependencies": {
-    "@cloudflare/vite-plugin": "^1.56.0",
+    "@cloudflare/vite-plugin": "^1.57.3",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
